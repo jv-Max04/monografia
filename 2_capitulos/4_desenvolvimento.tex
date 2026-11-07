@@ -42,7 +42,7 @@
 \section{Projeto do banco de dados}
 \label{sec:projeto-banco-dados}
 
-O banco de dados do Refino foi projetado para preservar o contexto das operações de tratamento de dados metabolômicos. Além de armazenar informações sobre os estudos e as matrizes recebidas, sua estrutura permite registrar os diagnósticos produzidos, as configurações de processamento, as decisões metodológicas e as métricas obtidas nas execuções. Dessa forma, o resultado de um tratamento pode ser relacionado aos dados de origem e ao procedimento utilizado para produzi-lo.
+O banco de dados do MetaRefino foi projetado para preservar o contexto das operações de tratamento de dados metabolômicos. Além de armazenar informações sobre os estudos e as matrizes recebidas, sua estrutura permite registrar os diagnósticos produzidos, as configurações de processamento, as decisões metodológicas e as métricas obtidas nas execuções. Dessa forma, o resultado de um tratamento pode ser relacionado aos dados de origem e ao procedimento utilizado para produzi-lo.
 
 As matrizes de medições são recebidas por meio de arquivos exportados do Progenesis QI e submetidas às etapas de validação, correção e pré-processamento. Após o tratamento, os arquivos resultantes podem ser utilizados pelos profissionais do laboratório em ferramentas como o MetaboAnalyst. Nesse fluxo, o banco de dados armazena os metadados e os registros associados ao processamento, enquanto os valores das matrizes científicas são mantidos nos arquivos de entrada e nos artefatos de saída.
 
@@ -63,7 +63,7 @@ A soma de verificação, armazenada no campo \texttt{checksum\_entrada}, contrib
 
 O banco também preserva os metadados das amostras. Informações como ordem de injeção, tipo de amostra, grupo experimental e lote participam da interpretação dos dados e das operações de correção. Seu armazenamento mantém esses elementos associados à matriz, permitindo recuperar o contexto em que as medições foram obtidas.
 
-Outra finalidade da persistência é registrar a participação do sistema e do profissional nas escolhas metodológicas. O Refino pode produzir propostas de configuração por meio de regras ou modelos, mas o usuário pode avaliar e modificar essas propostas. O histórico precisa, portanto, distinguir a origem da escolha e preservar a justificativa registrada, evitando que a configuração final elimine a informação sobre a proposta inicial.
+Outra finalidade da persistência é registrar a participação do sistema e do profissional nas escolhas metodológicas. O MetaRefino pode produzir propostas de configuração por meio de regras ou modelos, mas o usuário pode avaliar e modificar essas propostas. O histórico precisa, portanto, distinguir a origem da escolha e preservar a justificativa registrada, evitando que a configuração final elimine a informação sobre a proposta inicial.
 
 A persistência mantém essas informações disponíveis após o encerramento da aplicação. Os registros deixam de depender da memória do processo e podem ser consultados posteriormente, favorecendo a análise técnica, a identificação de diferenças entre processamentos e a discussão das escolhas realizadas.
 
@@ -160,7 +160,7 @@ Além da integridade estrutural, a persistência exige cuidados com os dados arm
 \subsection{Rastreabilidade das execuções}
 \label{subsec:rastreabilidade-execucoes}
 
-A rastreabilidade das execuções permite relacionar os resultados produzidos aos dados utilizados e ao procedimento aplicado. No Refino, essa capacidade é sustentada pela identificação das matrizes, pelo registro das configurações e sementes, pela preservação das decisões e pela associação das métricas de qualidade às execuções.
+A rastreabilidade das execuções permite relacionar os resultados produzidos aos dados utilizados e ao procedimento aplicado. No MetaRefino, essa capacidade é sustentada pela identificação das matrizes, pelo registro das configurações e sementes, pela preservação das decisões e pela associação das métricas de qualidade às execuções.
 
 O primeiro elemento desse percurso é a identificação da entrada. A matriz registra o estudo ao qual pertence, o modo de aquisição, suas dimensões e a soma de verificação do arquivo. Os metadados das amostras acrescentam informações sobre a ordem de injeção, o tipo, os grupos experimentais e os lotes. Esses registros estabelecem o contexto do conjunto de dados recebido.
 
@@ -203,7 +203,7 @@ Dessa forma, a persistência sustenta o acompanhamento das execuções e a anál
 \section{Implementação das funcionalidades}
 \label{sec:implementacao-funcionalidades}
 
-A implementação do Refino organiza o tratamento de dados metabolômicos em um fluxo que compreende a importação dos arquivos, a validação de sua estrutura, o diagnóstico da matriz, a escolha do método de correção, o pré-processamento e a exportação dos resultados. As funcionalidades foram desenvolvidas para reduzir a fragmentação das operações realizadas em diferentes ferramentas e preservar o contexto das decisões metodológicas tomadas durante o processamento.
+A implementação do MetaRefino organiza o tratamento de dados metabolômicos em um fluxo que compreende a importação dos arquivos, a validação de sua estrutura, o diagnóstico da matriz, a escolha do método de correção, o pré-processamento e a exportação dos resultados. As funcionalidades foram desenvolvidas para reduzir a fragmentação das operações realizadas em diferentes ferramentas e preservar o contexto das decisões metodológicas tomadas durante o processamento.
 
 O aplicativo recebe matrizes de medições provenientes do Progenesis QI e informações complementares sobre as amostras. A partir dessas entradas, constrói uma representação interna padronizada, utilizada pelos componentes de diagnóstico, correção e análise. Os resultados são disponibilizados por meio de arquivos tratados, registros das etapas, métricas de qualidade e gráficos que auxiliam o profissional na avaliação do processamento.
 
@@ -421,7 +421,7 @@ O acompanhamento integra a execução científica à interação com o usuário.
 \section{Interface e distribuição da aplicação}
 \label{sec:interface-distribuicao}
 
-A interface do Refino foi desenvolvida para disponibilizar as funcionalidades de tratamento de dados metabolômicos aos profissionais do laboratório por meio de um aplicativo Windows. Sua organização acompanha o fluxo de trabalho, desde a seleção dos arquivos até a avaliação e a exportação dos resultados, permitindo utilizar os recursos sem executar comandos ou configurar manualmente o ambiente de desenvolvimento.
+A interface do MetaRefino foi desenvolvida para disponibilizar as funcionalidades de tratamento de dados metabolômicos aos profissionais do laboratório por meio de um aplicativo Windows. Sua organização acompanha o fluxo de trabalho, desde a seleção dos arquivos até a avaliação e a exportação dos resultados, permitindo utilizar os recursos sem executar comandos ou configurar manualmente o ambiente de desenvolvimento.
 
 A aplicação utiliza uma interface gráfica construída com PySide6. Os componentes visuais se comunicam com uma API interna, iniciada pelo próprio aplicativo em endereço local. Essa organização mantém a apresentação separada dos procedimentos científicos e permite que as operações sejam executadas por uma camada comum de processamento.
 
@@ -527,7 +527,7 @@ Os recursos experimentais presentes no executável permanecem identificados como
 \subsection{Repositório do código-fonte}
 \label{subsec:repositorio-codigo-fonte}
 
-O código-fonte do Refino é mantido em um repositório com controle de versão Git. O versionamento permite acompanhar as alterações realizadas durante o desenvolvimento e identificar o estado do projeto utilizado na geração de uma versão da aplicação.
+O código-fonte do MetaRefino é mantido em um repositório com controle de versão Git. O versionamento permite acompanhar as alterações realizadas durante o desenvolvimento e identificar o estado do projeto utilizado na geração de uma versão da aplicação.
 
 O repositório reúne o código da interface, os componentes de processamento, os módulos de persistência, as migrações, os testes e os scripts de empacotamento. Também contém os materiais necessários à compreensão da organização do projeto e à preparação do ambiente de desenvolvimento.
 
@@ -540,11 +540,9 @@ O código adota a licença GPL-3.0-or-later. A licença do software não abrange
 O endereço do repositório do projeto é apresentado a seguir:
 
 \begin{quote}
-    \textbf{Repositório do código-fonte:} [INSERIR LINK DO REPOSITÓRIO]
+    \textbf{Repositório do código-fonte:} \url{https://github.com/jv-Max04/monografia}
 \end{quote}
 
-% Substituir o marcador pelo endereço definitivo.
-% Caso o documento utilize o pacote hyperref, pode-se empregar:
-% \url{ENDERECO_DO_REPOSITORIO}
-
 \section{Síntese do desenvolvimento}
+
+O desenvolvimento do MetaRefino integrou, em uma aplicação para Windows, as etapas de importação e validação dos arquivos, diagnóstico das matrizes, escolha e execução da correção, pré-processamento, análise estatística e exportação dos resultados. A persistência dos dados e dos registros de execução permite relacionar os artefatos gerados às entradas, às configurações e às decisões metodológicas adotadas, enquanto a interface gráfica reúne essas operações em um fluxo acompanhado pelo usuário. O empacotamento com as dependências necessárias e o controle de versão do código-fonte complementam a organização da aplicação e sua distribuição. Assim, a implementação estabelece a base para avaliar o funcionamento do sistema e os resultados do tratamento das matrizes, conforme os procedimentos e as evidências apresentados no capítulo seguinte.
