@@ -758,6 +758,22 @@ A distribuição é realizada em uma pasta que contém o executável e suas depe
 
 A interface é organizada em abas que agrupam as operações conforme sua finalidade. O fluxo principal compreende a preparação do estudo, a configuração e a execução do tratamento, a avaliação da qualidade e a inspeção dos gráficos. Uma área fixa de trabalhos em curso permite acompanhar as operações iniciadas durante a utilização do aplicativo. Além dessas, duas abas trazem funcionalidades em versão beta, fora do escopo deste trabalho, a análise de multiverso e as vias metabólicas, e a última, ``O que este aplicativo NÃO faz'', descreve os limites da ferramenta, num total de sete abas.
 
+A Figura~\ref{fig:4-aba-qualidade} mostra a aba ``Qualidade do resultado'', com cada métrica acompanhada da população em que foi medida, e a Figura~\ref{fig:4-aba-graficos}, a aba ``Gráficos'', com a trajetória dos QCs ao longo da corrida. As duas foram capturadas com os arquivos de um dos modos do estudo do laboratório, depois de uma execução sem correção.
+
+\begin{figure}[htbp]
+\centering
+\caption{Aba ``Qualidade do resultado'' do aplicativo}\label{fig:4-aba-qualidade}
+\includegraphics[width=\linewidth]{figs/cap4-aba-qualidade.png}
+\fonte{Elaborado pelos autores, com o aplicativo, em 10/11/2026.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\caption{Aba ``Gráficos'' do aplicativo, com a trajetória dos QCs ao longo da corrida}\label{fig:4-aba-graficos}
+\includegraphics[width=\linewidth]{figs/cap4-aba-graficos.png}
+\fonte{Elaborado pelos autores, com o aplicativo, em 10/11/2026.}
+\end{figure}
+
 A aba \textit{Preparar o estudo} concentra a seleção dos arquivos de entrada e a verificação das informações necessárias ao processamento. Nesse ponto, o usuário informa a matriz de medições e a lista de amostras correspondentes. A aplicação utiliza essas entradas para associar os valores medidos aos metadados, incluindo a ordem de injeção.
 
 Após a seleção, o usuário pode solicitar a validação dos arquivos. Os problemas identificados são apresentados antes da execução do tratamento, permitindo revisar as inconsistências e corrigir as entradas. Essa posição da validação no fluxo evita que falhas estruturais sejam percebidas apenas durante operações de maior duração.
