@@ -1,5 +1,5 @@
 % Capítulo 5, «Testes». GERADO de docs/capitulo-5-testes.md (repositório refino-quimiometrico),
-% em 10/11/2026, do commit 68c0e3b2 do .md. Os comentários abaixo trazem a
+% em 10/11/2026, do commit af2bd3ed do .md. Os comentários abaixo trazem a
 % procedência de cada número; não aparecem no PDF.
 % As escolhas feitas na montagem estão no cabeçalho daquele arquivo.
 
@@ -351,6 +351,20 @@ Depois que a ferramenta foi enviada para teste ao professor de metabolômica Ál
 % data são do grupo, em 03/11/2026: «16/09 mandamos o software pra ele testar». O plano das figuras
 % (docs/plans/2026-09-16-1721-feat-figuras-de-qualidade-da-correcao-plan.md) registra que ele viu a
 % ferramenta e sentiu falta dos gráficos que o pipeline em R gera, relato de 16/09/2026.
+
+A Figura~\ref{fig:5-1} mostra uma delas, o painel da correção, como o aplicativo a desenha: a PCA da matriz antes e depois da correção, com os QCs em vermelho. Ela foi gerada sobre o \texttt{neg\_\allowbreak{}c18}, com os padrões da janela: a caixa ``Automático'' escolheu o SERRF, com os dois lotes que o diagnóstico propôs, e o agrupamento dos QCs passou de 0,2975 para 0,1795. A fila de barras do alto fica vazia porque a medição de todos os corretores não foi executada nessa captura. A captura é de 10/11/2026, de uma versão do programa posterior às que este capítulo avalia, e serve para mostrar a figura, e não como resultado.
+
+\begin{figure}[htbp]
+\centering
+\caption{Painel da correção no aplicativo, sobre o neg\_c18: a PCA antes e depois da correção pelo SERRF, com os QCs em vermelho}\label{fig:5-1}
+\includegraphics[width=\linewidth]{figs/cap5-painel-da-correcao.png}
+\fonte{Elaborado pelos autores, com o aplicativo, em 10/11/2026.}
+\end{figure}
+
+% Captura por uma variante de scripts/captura_telas_do_guia.py que mantém a caixa «Automático»
+% marcada e abre o «Painel da correção» depois da execução; código de 68c0e3b2, Linux (WSLg). A
+% execução gravada no banco local tem correction = serrf, n_batches = 2 e seed = 42. O 0,2975 de antes
+% é o da Tabela 5.8; o depois difere do dela porque ali a correção usou um lote.
 
 \textbf{Caminho 1 --- a suíte automatizada das figuras.} Em dez módulos de teste das figuras, 383 testes passaram, nenhum reprovou e nenhum foi pulado, em 40,8 s; o módulo da aba, rodado separadamente (ver \ref{sec:5-5}), teve 178 testes aprovados --- o total do arquivo naquela data --- e nenhum reprovado, em 36,3 s. \textit{População:} matrizes pequenas construídas para os testes, e não os quatro arquivos reais --- esse caminho diz que o código faz o que os testes afirmam, e não que as figuras estão certas no dado real.
 
