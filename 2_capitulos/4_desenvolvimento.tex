@@ -126,7 +126,7 @@ RNF-06 & Restrição da comunicação à máquina local. & CT-SEG-001 \\ \hline
 \par\smallskip{\footnotesize Fonte: elaboração dos autores a partir do plano de testes e da documentação do projeto.}
 \end{table}
 
-No processamento por etapas, essa relação é complementada pelos arquivos \texttt{test\_api\_etapas.py} e \texttt{test\_desktop\_etapas.py}, que exercitam o contrato das prévias e o estado das etapas na interface. A paridade entre linha de comando e API é tratada em testes próprios, assim como o endereço de escuta e o arranque do servidor. A associação de um requisito a um arquivo de teste indica onde sua verificação é implementada; o resultado e as condições de execução são discutidos no capítulo seguinte.
+No processamento por etapas, essa relação é complementada pelos arquivos \texttt{test\_\allowbreak{}api\_\allowbreak{}etapas.py} e \texttt{test\_\allowbreak{}desktop\_\allowbreak{}etapas.py}, que exercitam o contrato das prévias e o estado das etapas na interface. A paridade entre linha de comando e API é tratada em testes próprios, assim como o endereço de escuta e o arranque do servidor. A associação de um requisito a um arquivo de teste indica onde sua verificação é implementada; o resultado e as condições de execução são discutidos no capítulo seguinte.
 
 O desenvolvimento também utiliza testes negativos, nos quais uma condição inválida deve provocar uma recusa ou uma reprovação. Essa prática permite verificar se o mecanismo detecta o defeito que pretende impedir. Quando há comparação com o processamento em R, a referência, os dados, a semente, a tolerância e o ambiente compõem o contexto da evidência. Por isso, critérios pendentes, testes pulados por ausência de dados e divergências conhecidas não são classificados automaticamente como funcionalidades validadas.
 
@@ -212,9 +212,9 @@ O cronograma de acompanhamento estabelecido pelo orientador previu a consolidaç
 
 Para novembro, o acompanhamento previa a entrega ao orientador em 9 de novembro, a aprovação em 18 de novembro, a revisão final em 19 de novembro e a finalização dos materiais em 25 de novembro. Há diferenças entre esses marcos e os prazos institucionais de aprovação, em 16 de novembro, de entrega do vídeo, em 19 de novembro, e de distribuição à banca, em 23 de novembro. Para efeito do planejamento apresentado, os prazos institucionais mais antecipados constituem as referências de entrega; os marcos posteriores de acompanhamento não os substituem.
 
-A Figura~\ref{fig:4-gantt} apresenta um Gantt sintético em escala mensal. As faixas representam a organização geral das atividades acadêmicas e técnicas, combinando o planejamento informado e o período documentado de implementação. Não representam medições de esforço individual ou datas exatas de início e término de cada tarefa. A distribuição nominal das responsabilidades é detalhada na subseção seguinte.
+O Quadro~\ref{fig:4-gantt} apresenta um Gantt sintético em escala mensal. As faixas representam a organização geral das atividades acadêmicas e técnicas, combinando o planejamento informado e o período documentado de implementação. Não representam medições de esforço individual ou datas exatas de início e término de cada tarefa. A distribuição nominal das responsabilidades é detalhada na subseção seguinte.
 
-\begin{figure}[htbp]
+\begin{quadro}[htbp]
 \centering
 \caption{Diagrama de Gantt sintético das atividades do projeto em 2026.}
 \label{fig:4-gantt}
@@ -234,7 +234,7 @@ Apresentação e ajustes finais (grupo) & & & & & X & & & & & X & X \\ \hline
 \end{tabularx}
 \endgroup
 \par\smallskip{\footnotesize Fonte: elaboração dos autores a partir dos cronogramas informados e dos planos de desenvolvimento. X indica o mês abrangido pela atividade; as faixas constituem uma síntese do planejamento.}
-\end{figure}
+\end{quadro}
 
 As atividades de novembro e dezembro são apresentadas como previstas quando não há registro de sua conclusão. Da mesma forma, a disponibilização da aplicação ao laboratório e a avaliação pelos usuários constituem atividades diferentes: o envio do software não encerra a coleta de retorno. O estado da avaliação deve ser considerado na interpretação dos resultados apresentados no capítulo de testes.
 
@@ -323,7 +323,7 @@ A janela coleta os arquivos e os valores dos controles e os encaminha ao cliente
 
 Trabalhos demorados são despachados e identificados para acompanhamento posterior. A janela consulta o progresso por temporizadores do Qt, evitando depender de uma interação manual a cada atualização. A separação entre disparo e leitura do estado permite manter a interface operacional durante o cálculo e oferecer a solicitação de cancelamento. Esse cancelamento é cooperativo: o pedido é observado nos pontos previstos pelo processamento.
 
-O fluxo por etapas utiliza as rotas \texttt{/etapas/correcao} e \texttt{/etapas/pre-processamento} para as prévias, e \texttt{/execucoes} para a execução final. Cada pedido transporta as informações necessárias à operação. A sequência percorrida pelo usuário é controlada pela janela; não depende de uma sessão implícita de etapas no servidor. Isso não significa que o servidor seja desprovido de estado: ele mantém registros dos trabalhos e um mecanismo de reutilização de correções em memória.
+{\sloppy O fluxo por etapas utiliza as rotas \texttt{/etapas/\allowbreak{}correcao} e \texttt{/etapas/\allowbreak{}pre-processamento} para as prévias, e \texttt{/execucoes} para a execução final. Cada pedido transporta as informações necessárias à operação. A sequência percorrida pelo usuário é controlada pela janela; não depende de uma sessão implícita de etapas no servidor. Isso não significa que o servidor seja desprovido de estado: ele mantém registros dos trabalhos e um mecanismo de reutilização de correções em memória.\par}
 
 Na interface, cada etapa conserva uma representação dos parâmetros e da identidade das entradas utilizados no disparo. Essa representação é comparada com a configuração corrente para classificar a etapa como não realizada, em curso, atualizada ou desatualizada. A alteração de um campo da correção afeta seus resultados e os das etapas dependentes; uma alteração exclusiva da etapa final não invalida necessariamente a correção já calculada. Assim, a validade do resultado está ligada aos valores que o produziram.
 
@@ -385,7 +385,7 @@ Essa necessidade está relacionada à natureza do pré-processamento metabolômi
 
 O armazenamento é organizado a partir do estudo e de suas matrizes. Cada estudo reúne os conjuntos de dados pertencentes a um mesmo contexto experimental. Cada matriz, por sua vez, possui informações sobre o modo de aquisição, a quantidade de amostras, a quantidade de variáveis e a soma de verificação da entrada. Essa organização permite distinguir conjuntos de dados e associar os registros posteriores à matriz correspondente.
 
-A soma de verificação, armazenada no campo \texttt{checksum\_entrada}, contribui para a identificação do conteúdo utilizado no processamento. O nome do arquivo não é suficiente para essa finalidade, pois pode ser alterado sem modificar os dados ou mantido após uma edição de seu conteúdo. O registro do \textit{checksum} permite verificar se um arquivo corresponde à entrada associada à matriz persistida.
+A soma de verificação, armazenada no campo \texttt{checksum\_\allowbreak{}entrada}, contribui para a identificação do conteúdo utilizado no processamento. O nome do arquivo não é suficiente para essa finalidade, pois pode ser alterado sem modificar os dados ou mantido após uma edição de seu conteúdo. O registro do \textit{checksum} permite verificar se um arquivo corresponde à entrada associada à matriz persistida.
 
 O banco também preserva os metadados das amostras. Informações como ordem de injeção, tipo de amostra, grupo experimental e lote participam da interpretação dos dados e das operações de correção. Seu armazenamento mantém esses elementos associados à matriz, permitindo recuperar o contexto em que as medições foram obtidas.
 
@@ -406,7 +406,7 @@ As tabelas são definidas com SQLAlchemy Core, e o acesso aos registros é reali
 
 A tabela \texttt{studies} representa o estudo. Seus atributos incluem um identificador, o nome, a descrição e a data de criação. O nome possui uma restrição de unicidade, permitindo diferenciar os estudos registrados no banco. Essa entidade constitui o nível superior de organização dos dados.
 
-A tabela \texttt{matrices} representa as matrizes associadas aos estudos. Cada registro contém o identificador do estudo, o modo de aquisição, a quantidade de amostras, a quantidade de variáveis e a soma de verificação do par de arquivos de entrada, as medidas e a lista de amostras. O campo \texttt{study\_id} estabelece o vínculo com \texttt{studies}.
+A tabela \texttt{matrices} representa as matrizes associadas aos estudos. Cada registro contém o identificador do estudo, o modo de aquisição, a quantidade de amostras, a quantidade de variáveis e a soma de verificação do par de arquivos de entrada, as medidas e a lista de amostras. O campo \texttt{study\_\allowbreak{}id} estabelece o vínculo com \texttt{studies}.
 
 O relacionamento entre estudo e matriz é de um para muitos. Um estudo pode reunir diversas matrizes, enquanto cada matriz pertence a um estudo. Essa cardinalidade permite representar diferentes condições de aquisição dentro de um mesmo contexto experimental, preservando a identificação individual de cada conjunto de dados.
 
@@ -416,7 +416,7 @@ A ordem de injeção é obrigatória porque representa a posição da amostra na
 
 O tipo de amostra e o grupo experimental possuem funções distintas. O tipo identifica a natureza da amostra no processamento, incluindo as amostras de controle de qualidade. O grupo representa sua classificação experimental. O lote identifica o bloco de aquisição ao qual a amostra pertence. A separação desses atributos evita reunir informações metodologicamente diferentes em um único campo.
 
-A tabela \texttt{diagnoses} registra os diagnósticos produzidos sobre uma matriz. Seus atributos incluem o identificador da matriz, o tipo de defeito identificado, a confiança atribuída ao diagnóstico, o perfil utilizado na avaliação e a data de criação. O campo \texttt{profile\_json} conserva a representação detalhada desse perfil.
+A tabela \texttt{diagnoses} registra os diagnósticos produzidos sobre uma matriz. Seus atributos incluem o identificador da matriz, o tipo de defeito identificado, a confiança atribuída ao diagnóstico, o perfil utilizado na avaliação e a data de criação. O campo \texttt{profile\_\allowbreak{}json} conserva a representação detalhada desse perfil.
 
 O relacionamento entre matriz e diagnóstico é de um para muitos. Essa organização permite manter diferentes avaliações associadas à mesma matriz, sem substituir sua identificação ou alterar seus metadados de origem.
 
@@ -430,9 +430,9 @@ A tabela \texttt{runs} representa as execuções do pipeline. Cada execução es
 
 O relacionamento entre matriz e execução é de um para muitos. Assim, uma mesma matriz pode ser processada diversas vezes, inclusive com configurações diferentes. A separação entre essas entidades evita confundir o conjunto de dados recebido com uma tentativa específica de tratamento.
 
-A especificação é armazenada no campo \texttt{spec\_json}. A semente é registrada em \texttt{seed}, enquanto os campos \texttt{iniciado\_em} e \texttt{terminado\_em} situam a execução no tempo. O campo \texttt{status} representa seu estado, e \texttt{etapas\_json} registra a duração de cada etapa, em segundos, quando a execução é cronometrada; nas execuções sem cronometragem, o campo fica vazio.
+A especificação é armazenada no campo \texttt{spec\_\allowbreak{}json}. A semente é registrada em \texttt{seed}, enquanto os campos \texttt{iniciado\_\allowbreak{}em} e \texttt{terminado\_\allowbreak{}em} situam a execução no tempo. O campo \texttt{status} representa seu estado, e \texttt{etapas\_\allowbreak{}json} registra a duração de cada etapa, em segundos, quando a execução é cronometrada; nas execuções sem cronometragem, o campo fica vazio.
 
-A tabela \texttt{quality\_reports} armazena as métricas de qualidade vinculadas às execuções. Cada registro possui uma chave estrangeira para \texttt{runs} e um campo \texttt{metrics\_json} com as medidas correspondentes. Essa associação permite interpretar as métricas em conjunto com a especificação que produziu o resultado.
+A tabela \texttt{quality\_\allowbreak{}reports} armazena as métricas de qualidade vinculadas às execuções. Cada registro possui uma chave estrangeira para \texttt{runs} e um campo \texttt{metrics\_\allowbreak{}json} com as medidas correspondentes. Essa associação permite interpretar as métricas em conjunto com a especificação que produziu o resultado.
 
 A vinculação do relatório à execução é necessária porque a qualidade observada depende do processamento aplicado. Uma mesma matriz pode apresentar resultados diferentes após alterações no método de correção ou nos parâmetros de pré-processamento. Portanto, as métricas são relacionadas à execução correspondente, mantendo o contexto de sua obtenção.
 
@@ -494,11 +494,11 @@ O segundo elemento é a especificação do processamento. O registro de execuç�
 
 A semente registrada contribui para o controle das operações estocásticas. Sua preservação permite identificar o parâmetro utilizado para inicializar os procedimentos que envolvem aleatoriedade. Entretanto, a repetição da semente deve ser acompanhada da conservação da entrada e de um ambiente computacional compatível para que a reexecução seja interpretada adequadamente.
 
-Os instantes de início e término situam a execução no tempo. O estado informa sua condição registrada, permitindo distinguir o processamento em andamento de seus desfechos. O conteúdo de \texttt{etapas\_json} acrescenta informações sobre as operações realizadas, ampliando o contexto disponível para acompanhamento.
+Os instantes de início e término situam a execução no tempo. O estado informa sua condição registrada, permitindo distinguir o processamento em andamento de seus desfechos. O conteúdo de \texttt{etapas\_\allowbreak{}json} acrescenta informações sobre as operações realizadas, ampliando o contexto disponível para acompanhamento.
 
 A rastreabilidade é limitada ao conteúdo efetivamente persistido. O registro de etapas não equivale a um histórico de todos os eventos internos da aplicação, e o banco não deve ser interpretado como um mecanismo de auditoria integral. Sua finalidade é conservar as informações metodológicas e operacionais previstas no modelo.
 
-As métricas de qualidade são vinculadas à execução por meio de \texttt{quality\_reports}. Essa relação permite consultar o resultado da avaliação junto à configuração que o produziu. Como diferentes medidas representam aspectos distintos do processamento, a análise considera um conjunto de métricas, evitando reduzir a avaliação a um único indicador.
+As métricas de qualidade são vinculadas à execução por meio de \texttt{quality\_\allowbreak{}reports}. Essa relação permite consultar o resultado da avaliação junto à configuração que o produziu. Como diferentes medidas representam aspectos distintos do processamento, a análise considera um conjunto de métricas, evitando reduzir a avaliação a um único indicador.
 
 A preservação das decisões acrescenta outro nível de rastreabilidade. O campo de origem identifica a procedência da sugestão ou da configuração registrada, permitindo distinguir o apoio fornecido pelo sistema da manifestação do usuário. A justificativa permite compreender o motivo registrado, enquanto os campos relacionados à apresentação e à sobrescrita acrescentam informações sobre a interação do profissional com a proposta.
 
