@@ -93,6 +93,15 @@
 %%  INICIO DO DOCUMENTO -- MODIFICAR A PARTIR DAQUI SOMENTE!! %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{extras/dados.tex}
+
+% Quadros: o ambiente e a lista. A seção 4.8 só define o ambiente se ele faltar.
+\providecommand{\quadroname}{Quadro}
+\newfloat{quadro}{loq}{\quadroname}
+\newlistof{listofquadros}{loq}{Lista de quadros}
+\newlistentry{quadro}{loq}{0}
+\renewcommand{\cftquadroname}{\quadroname\space}
+\renewcommand*{\cftquadroaftersnum}{\hfill\textendash\hfill}
+
 \begin{document}
 
 % Configurações de CITAÇÕES para abntex2
@@ -154,22 +163,33 @@
 \listoftables*
 \cleardoublepage
 
+% Lista de quadros
+\pdfbookmark[0]{Lista de quadros}{loq}
+\listofquadros*
+\cleardoublepage
+
 % Lista de abreviaturas e siglas
 \begin{siglas}
-  \item[ABNT] Associação Brasileira de Normas Técnicas
-  \item[abnTeX] Normas para TeX
+  \item[API] Interface de programação de aplicações (Application Programming Interface)
+  \item[CSV] Valores separados por vírgula (Comma-Separated Values)
+  \item[FDR] Taxa de falsas descobertas (False Discovery Rate)
+  \item[HILIC] Cromatografia de interação hidrofílica (Hydrophilic Interaction Liquid Chromatography)
+  \item[IA] Inteligência Artificial
   \item[LC-MS] Cromatografia Líquida acoplada à Espectrometria de Massas
   \item[LOESS] Locally Estimated Scatterplot Smoothing
   \item[PCA] Análise de Componentes Principais
   \item[PLS-DA] Partial Least Squares Discriminant Analysis
   \item[PNG] Portable Network Graphics
   \item[POSIX] Portable Operating System Interface
+  \item[PQN] Probabilistic Quotient Normalization
   \item[QC] Controle de qualidade
   \item[RF] Random Forest
   \item[RSD] Desvio padrão relativo
   \item[SERRF] Systematic Error Removal using Random Forest
   \item[SVM] Support Vector Machines
+  \item[TIC] Corrente iônica total (Total Ion Current)
   \item[UTF-8] Unicode Transformation Format, 8 bits
+  \item[VSN] Variance Stabilizing Normalization
 \end{siglas}
 
 % Lista de símbolos
