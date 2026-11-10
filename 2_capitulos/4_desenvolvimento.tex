@@ -42,7 +42,7 @@ Os principais casos de uso do fluxo entregue são os seguintes:
 \begin{enumerate}
 \item \textbf{Preparar e validar o estudo:} selecionar o par de arquivos e o modo de aquisição, verificar sua estrutura e examinar os erros e avisos encontrados.
 \item \textbf{Diagnosticar os dados:} consultar indicadores de qualidade, indícios de variação técnica e propostas de organização dos lotes.
-\item \textbf{Definir a correção:} examinar os indicadores de qualidade, comparar os métodos disponíveis e selecionar o corretor que será aplicado.
+\item \textbf{Definir a correção:} aceitar o corretor que o palpite propõe, aplicado por padrão pela caixa ``Automático'', ou desmarcá-la, comparar os métodos disponíveis e selecionar o corretor que será aplicado.
 \item \textbf{Executar o tratamento:} configurar e realizar a correção e o pré-processamento, pelo fluxo completo ou por etapas, com acompanhamento do trabalho.
 \item \textbf{Avaliar os resultados:} consultar as métricas e as figuras correspondentes à matriz e ao estágio de processamento considerado.
 \item \textbf{Obter os artefatos:} gerar e salvar as matrizes corrigida e processada e exportar a entrada compatível com o MetaboAnalyst.
@@ -63,19 +63,19 @@ Os identificadores abaixo acompanham o levantamento relacionado ao plano de test
 \item[RF-01 --- Seleção da entrada.] Permitir selecionar os arquivos de medições e de descrição das amostras e informar o modo de aquisição, distinguindo a finalidade de cada arquivo.
 \item[RF-02 --- Validação.] Verificar a estrutura e a coerência da entrada, apresentar erros e avisos e impedir a continuidade quando houver condição incompatível com o processamento solicitado.
 \item[RF-03 --- Diagnóstico.] Produzir um perfil dos dados e apresentar o diagnóstico e as propostas de fronteiras de lote, preservando a distinção entre indicação computacional e confirmação pelo pesquisador.
-\item[RF-04 --- Apoio à escolha.] Permitir a comparação dos métodos de correção por meio de sua execução e da apresentação dos indicadores de qualidade, identificando o critério empregado e mantendo com o pesquisador a escolha do método a aplicar.
+\item[RF-04 --- Apoio à escolha.] Propor o corretor por uma medição sobre a própria matriz e, por padrão, aplicá-lo pela caixa ``Automático''; permitir que o pesquisador a desmarque, compare os métodos de correção por meio de sua execução e da apresentação dos indicadores de qualidade e escolha o método a aplicar, identificando o critério empregado.
 \item[RF-05 --- Correção.] Disponibilizar as opções \texttt{none}, \texttt{serrf} e \texttt{loess}. A primeira mantém o sinal sem correção e permite estabelecer uma condição de comparação.
 \item[RF-06 --- Grupos experimentais.] Receber e validar o par de grupos utilizado nas análises que exigem essa definição, recusando referências a grupos inexistentes.
 \item[RF-07 --- Validação do PLS-DA.] Apresentar o PLS-DA acompanhado do Q$^{2}$ e do valor de $p$ obtido por permutação, evitando que a separação visual seja apresentada isoladamente como evidência suficiente de validade estatística do resultado.
 \item[RF-08 --- Reprodução.] Permitir repetir o processamento com a mesma entrada, configuração e semente no ambiente considerado.
 \item[RF-09 --- Progresso.] Atualizar o acompanhamento dos trabalhos do fluxo principal sem exigir que o pesquisador solicite manualmente cada leitura.
 \item[RF-10 --- Matrizes de saída.] Gerar e salvar os artefatos de correção e pré-processamento, distinguindo o estágio representado por cada arquivo.
-\item[RF-11 --- Exportação.] Produzir arquivo no formato de intercâmbio com o MetaboAnalyst e, quando aplicado o teto de 5.000 variáveis definido pelo projeto, selecionar pelo critério de RSD e registrar as exclusões. Esse teto descreve a política implementada no MetaRefino, sem constituir afirmação universal sobre todas as modalidades de uso da ferramenta externa.
+\item[RF-11 --- Exportação.] Produzir arquivo no formato de intercâmbio com o MetaboAnalyst e, quando aplicado o teto de 5.000 variáveis, padrão adotado pelo projeto a partir do limite relatado pelo laboratório para a versão web do MetaboAnalyst, selecionar pelo critério de RSD e registrar as exclusões. Esse teto descreve a política implementada no MetaRefino, sem constituir afirmação universal sobre todas as modalidades de uso da ferramenta externa.
 \item[RF-13 --- Cancelamento.] Permitir solicitar a interrupção dos trabalhos acompanhados pela aplicação e informar seu estado.
 \item[RF-15 --- Qualidade.] Exibir um conjunto de métricas de qualidade e identificar a variante e o estimador utilizados, permitindo interpretar os resultados além de um único indicador.
 \item[RF-16 --- Limites.] Apresentar as restrições da aplicação e o alcance das operações oferecidas.
 \item[RF-17 --- Linha de comando.] Oferecer os comandos de correção, processamento e exportação com compartilhamento dos mecanismos de geração dos artefatos e registro da configuração utilizada.
-\item[RF-18 --- Análises estatísticas.] Permitir solicitar as análises implementadas no fluxo da janela, incluindo PCA, PLS-DA binário, comparação univariada entre grupos, ANOVA, PERMANOVA, correlações e agrupamentos, respeitando os parâmetros e as condições exigidos por cada procedimento.
+\item[RF-18 --- Análises estatísticas.] Permitir solicitar as análises implementadas no fluxo da janela, incluindo PCA, PLS-DA binário, classificadores por floresta aleatória e por máquina de vetores de suporte, comparação univariada entre grupos, ANOVA, PERMANOVA, correlações e agrupamentos, respeitando os parâmetros e as condições exigidos por cada procedimento.
 \item[RF-19 --- Visualização.] Reunir as figuras em um seletor, permitir sua inspeção e oferecer os recursos de ampliação e exportação. As figuras devem identificar a matriz e o contexto de processamento a que se referem.
 \item[RF-20 --- Qualidade da correção.] Apresentar figuras de diagnóstico e comparação antes e depois do tratamento, incluindo trajetória dos QCs, dispersão, RSD e composição das amostras, indicando quando faltam dados necessários para uma representação.
 \end{description}
@@ -395,7 +395,7 @@ A persistência mantém essas informações disponíveis após o encerramento da
 
 O armazenamento local também atende às condições de utilização do aplicativo no laboratório. Como o SQLite mantém o banco em um arquivo, a aplicação não depende de um serviço de banco de dados separado para registrar suas operações. Essa característica simplifica a implantação e permite que o processamento e a persistência sejam realizados no próprio computador utilizado pelo profissional.
 
-O banco complementa os arquivos científicos e os relatórios gerados. A recuperação completa do contexto de uma análise exige a conservação desses elementos em conjunto: os registros persistidos descrevem o processamento, os arquivos mantêm os dados de entrada e de saída, e os relatórios apresentam os resultados e as informações necessárias à sua interpretação.
+O banco complementa os arquivos científicos e os arquivos de saída: as matrizes em CSV, no formato do pipeline anterior, normalizadas ou para o MetaboAnalyst, e a lista das variáveis removidas. A recuperação completa do contexto de uma análise exige a conservação desses elementos em conjunto: os registros persistidos descrevem o processamento, os arquivos mantêm os dados de entrada e de saída, e os arquivos de saída trazem os resultados e o que foi removido em cada etapa.
 
 \subsection{Modelo de dados e relacionamentos}
 \label{subsec:modelo-dados-relacionamentos}
@@ -513,7 +513,7 @@ Essa interação é representada por quatro situações:
     \item \textbf{Ausência de proposta:} a configuração é definida manualmente sem uma sugestão do sistema associada.
 \end{enumerate}
 
-A distinção entre ausência de sobrescrita e sobrescrita com concordância é necessária para interpretar a participação do usuário. Executar o processamento sem alterar os controles não demonstra, por si só, que a proposta foi avaliada e confirmada. Por outro lado, exercer o controle e manter a mesma configuração constitui uma manifestação explícita de concordância.
+A distinção entre ausência de sobrescrita e sobrescrita com concordância é necessária para interpretar a participação do usuário. Executar o processamento sem alterar os controles não demonstra, por si só, que a proposta foi avaliada e confirmada. Por outro lado, exercer o controle e manter a mesma configuração constitui uma manifestação explícita de concordância. Na janela, porém, essa distinção não é registrada: como os campos já vêm preenchidos com a proposta, manter a proposta grava a ausência de sobrescrita, e mudar algum campo grava a sobrescrita com discordância. As outras duas situações existem no modelo de dados e na interface de programação.
 
 Quando há proposta e manifestação manual, as duas decisões são gravadas na mesma transação. Esse procedimento evita a persistência parcial do par em caso de falha na operação. A transação preserva a unidade lógica necessária para interpretar a interação entre o sistema e o profissional.
 
@@ -573,7 +573,7 @@ A associação entre a matriz e a lista de amostras é realizada pelos identific
 
 A validação verifica a estrutura dos documentos e a compatibilidade das informações utilizadas no carregamento. Entre os aspectos considerados estão a identificação das amostras, a organização dos campos, a interpretação dos valores e a disponibilidade dos metadados exigidos pelo processamento.
 
-Os problemas encontrados são representados por registros que contêm código, severidade, mensagem e localização, quando disponível. As severidades distinguem erros, avisos e informações. Essa organização permite apresentar ao usuário a natureza do problema e o ponto do arquivo ao qual ele se refere.
+Os problemas encontrados são representados por registros que contêm código, severidade, mensagem e, quando disponível, localização; a interface de programação devolve os três primeiros. As severidades distinguem erros, avisos e informações. Essa organização permite apresentar ao usuário a natureza e a gravidade de cada problema.
 
 O procedimento reúne a lista de problemas identificados, em vez de interromper a avaliação na primeira ocorrência. Dessa forma, o usuário pode revisar as inconsistências em conjunto, reduzindo a necessidade de repetir a importação para descobrir problemas sucessivos.
 
@@ -600,7 +600,7 @@ A escolha do corretor considera três alternativas: manutenção do sinal sem co
 
 O apoio à escolha reúne sugestões baseadas no perfil da matriz e a comparação dos métodos disponíveis. O usuário pode examinar as informações do diagnóstico e solicitar a execução das alternativas para comparar seus resultados por critérios de avaliação. Esses elementos oferecem subsídios para a seleção do corretor pelo profissional.
 
-A interpretação desses elementos considera o procedimento utilizado para obtê-los. Uma sugestão baseada no diagnóstico não equivale à avaliação dos corretores sobre a matriz. A comparação dos resultados exige realizar os tratamentos e calcular os indicadores correspondentes.
+A interpretação desses elementos considera o procedimento utilizado para obtê-los. O palpite, medido numa amostra de 200 \textit{features}, não equivale à avaliação dos corretores sobre a matriz inteira. A comparação dos resultados exige realizar os tratamentos e calcular os indicadores correspondentes.
 
 O usuário seleciona o método e pode modificar a sugestão apresentada. A configuração aplicada e a origem do registro são preservadas, permitindo acompanhar a relação entre a informação fornecida pelo sistema e a escolha do profissional.
 
@@ -613,11 +613,11 @@ A correção do sinal busca reduzir a variação sistemática relacionada à aqu
 
 A implementação oferece os métodos \texttt{none}, \texttt{loess} e \texttt{serrf}. O primeiro mantém os valores sem aplicar um corretor, permitindo utilizar a matriz original como referência de comparação.
 
-O método LOESS utiliza regressão local sobre o sinal dos QCs em função da ordem de injeção, considerando os lotes definidos para o processamento. A curva ajustada representa a variação estimada ao longo da corrida e é utilizada na obtenção dos valores corrigidos.
+O método LOESS utiliza regressão local sobre o sinal dos QCs em função da ordem de injeção, considerando os lotes definidos para o processamento. A curva ajustada representa a variação estimada ao longo da corrida e é utilizada na obtenção dos valores corrigidos \cite{dunn2011procedures}.
 
 Esse procedimento pressupõe que a variação técnica possa ser representada por uma trajetória suficientemente suave. A quantidade e a distribuição dos QCs influenciam a capacidade de estimar essa trajetória, especialmente nas regiões em que há menor suporte de observações.
 
-O método SERRF utiliza florestas aleatórias para estimar o comportamento de cada variável a partir de informações de aquisição e do comportamento de outras variáveis. O ajuste utiliza os QCs como referência, e as previsões participam do cálculo do sinal corrigido.
+O método SERRF utiliza florestas aleatórias para estimar o comportamento de cada variável a partir de informações de aquisição e do comportamento de outras variáveis. O ajuste utiliza os QCs como referência, e as previsões participam do cálculo do sinal corrigido \cite{fan2019systematic}.
 
 A implementação em Python usa, por padrão, uma floresta que reproduz a amostragem do \textit{ranger}, do R, construída sobre as árvores de decisão do scikit-learn. Sua comparação com o código de referência em R considera que bibliotecas diferentes podem produzir ajustes diferentes mesmo quando o procedimento geral e os parâmetros são correspondentes. Por isso, a fidelidade das etapas e a qualidade da correção são avaliadas separadamente.
 
@@ -692,11 +692,11 @@ As análises univariadas examinam diferenças entre grupos por variável. O sist
 
 A correção para múltiplos testes é aplicada para controlar a taxa de falsas descobertas. Os resultados ajustados são identificados como valores-q, mantendo a distinção em relação aos valores-p obtidos nos testes individuais.
 
-A análise discriminante por mínimos quadrados parciais, ou PLS-DA, é acompanhada de validação cruzada e teste de permutação. Esses procedimentos avaliam o comportamento preditivo e ajudam a evitar que a separação observada no ajuste seja interpretada, isoladamente, como evidência de capacidade de generalização.
+A análise discriminante por mínimos quadrados parciais, ou PLS-DA, é acompanhada de validação cruzada e teste de permutação. Esses procedimentos avaliam o comportamento preditivo e ajudam a evitar que a separação observada no ajuste seja interpretada, isoladamente, como evidência de capacidade de generalização \cite{westerhuis2008assessment}.
 
 Os gráficos do PLS-DA incluem projeções, cargas e importância das variáveis. Os indicadores de validação acompanham sua apresentação, permitindo interpretar a representação visual junto ao desempenho avaliado.
 
-O sistema também incorpora classificadores como Random Forest e SVM, além de PERMANOVA sobre a representação em componentes principais. Essas análises ampliam os recursos de avaliação, mas seus resultados permanecem dependentes do desenho do estudo e das condições de validação utilizadas.
+O sistema também incorpora classificadores como Random Forest \cite{breiman2001random} e SVM, além de PERMANOVA sobre a representação em componentes principais. Essas análises ampliam os recursos de avaliação, mas seus resultados permanecem dependentes do desenho do estudo e das condições de validação utilizadas.
 
 Os gráficos de qualidade incluem representações das distribuições, comparações entre estados do processamento e medidas de variação por variável ou grupo. Sua finalidade é permitir a inspeção de padrões que uma tabela de indicadores agregados pode ocultar.
 
@@ -764,7 +764,7 @@ Após a seleção, o usuário pode solicitar a validação dos arquivos. Os prob
 
 O diagnóstico acrescenta informações sobre o comportamento da matriz e dos controles de qualidade. Seus resultados auxiliam a escolha do método de correção e a avaliação de possíveis fronteiras de lote. As sugestões produzidas pelo sistema permanecem sujeitas à revisão do profissional.
 
-A aba \textit{Corrigir e levar o resultado} reúne os controles de configuração e execução do processamento. O usuário pode selecionar o corretor e definir as operações posteriores, como filtragem, tratamento de valores ausentes, normalização, transformação e escalonamento. Também pode utilizar os recursos de apoio à escolha do método, considerando a distinção entre uma estimativa e uma comparação obtida pela execução das alternativas.
+A aba \textit{Corrigir e levar o resultado} reúne os controles de configuração e execução do processamento. O usuário pode selecionar o corretor e definir as operações posteriores, como filtragem, tratamento de valores ausentes, normalização, transformação e escalonamento. Por padrão, a caixa ``Automático'' vem marcada e aplica o corretor do palpite, medido em 200 \textit{features}; o usuário pode desmarcá-la, comparar os métodos pela medição completa e escolher o corretor.
 
 A configuração aplicada integra o registro da execução. A organização dos controles permite relacionar o resultado aos parâmetros escolhidos, evitando que o processamento seja apresentado como uma operação única cujas decisões internas não possam ser identificadas.
 
@@ -801,7 +801,7 @@ As mensagens evitam tratar toda ocorrência como uma falha equivalente. Uma entr
 
 As sugestões do sistema são acompanhadas de justificativas, permitindo que o usuário examine a base da escolha antes de aceitá-la ou modificá-la. A possibilidade de sobrescrita mantém o controle metodológico com o profissional e permite registrar sua participação no processo.
 
-A interface distingue a estimativa de corretor da medição realizada pela execução das alternativas. Essa separação permite distinguir uma sugestão baseada no diagnóstico dos resultados efetivamente medidos sobre a matriz atual.
+A interface distingue o palpite, medido numa amostra de 200 \textit{features}, da medição completa, que aplica os corretores a todas as \textit{features}. Essa separação permite distinguir a sugestão dos resultados medidos sobre a matriz inteira.
 
 As métricas são apresentadas com informações que contextualizam seu significado. A identificação do estimador, da população considerada e do ponto de processamento permite reconhecer o que foi medido. Essa contextualização é necessária porque indicadores com o mesmo nome podem assumir interpretações diferentes conforme o procedimento utilizado.
 
@@ -864,7 +864,3 @@ O endereço do repositório do projeto é apresentado a seguir:
 \begin{quote}
     \textbf{Repositório do código-fonte:} \url{github.com/NishiyaKN/refino-quimiometrico}
 \end{quote}
-
-\section{Síntese do desenvolvimento}
-
-O desenvolvimento do MetaRefino integrou, em uma aplicação para Windows, as etapas de importação e validação dos arquivos, diagnóstico das matrizes, seleção do corretor pelo profissional e execução da correção, pré-processamento, análise estatística e exportação dos resultados. A persistência dos dados e dos registros de execução permite relacionar os artefatos gerados às entradas, às configurações e às decisões metodológicas adotadas, enquanto a interface gráfica reúne essas operações em um fluxo de apoio à decisão, configurado e acompanhado pelo usuário. O empacotamento com as dependências necessárias e o controle de versão do código-fonte complementam a organização da aplicação e sua distribuição. Assim, a implementação estabelece a base para avaliar o funcionamento do sistema e os resultados do tratamento das matrizes, conforme os procedimentos e as evidências apresentados no capítulo seguinte.
