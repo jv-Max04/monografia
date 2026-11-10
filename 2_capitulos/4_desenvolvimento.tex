@@ -406,7 +406,7 @@ As tabelas são definidas com SQLAlchemy Core, e o acesso aos registros é reali
 
 A tabela \texttt{studies} representa o estudo. Seus atributos incluem um identificador, o nome, a descrição e a data de criação. O nome possui uma restrição de unicidade, permitindo diferenciar os estudos registrados no banco. Essa entidade constitui o nível superior de organização dos dados.
 
-A tabela \texttt{matrices} representa as matrizes associadas aos estudos. Cada registro contém o identificador do estudo, o modo de aquisição, a quantidade de amostras, a quantidade de variáveis e a soma de verificação do arquivo de entrada. O campo \texttt{study\_id} estabelece o vínculo com \texttt{studies}.
+A tabela \texttt{matrices} representa as matrizes associadas aos estudos. Cada registro contém o identificador do estudo, o modo de aquisição, a quantidade de amostras, a quantidade de variáveis e a soma de verificação do par de arquivos de entrada, as medidas e a lista de amostras. O campo \texttt{study\_id} estabelece o vínculo com \texttt{studies}.
 
 O relacionamento entre estudo e matriz é de um para muitos. Um estudo pode reunir diversas matrizes, enquanto cada matriz pertence a um estudo. Essa cardinalidade permite representar diferentes condições de aquisição dentro de um mesmo contexto experimental, preservando a identificação individual de cada conjunto de dados.
 
@@ -430,7 +430,7 @@ A tabela \texttt{runs} representa as execuções do pipeline. Cada execução es
 
 O relacionamento entre matriz e execução é de um para muitos. Assim, uma mesma matriz pode ser processada diversas vezes, inclusive com configurações diferentes. A separação entre essas entidades evita confundir o conjunto de dados recebido com uma tentativa específica de tratamento.
 
-A especificação é armazenada no campo \texttt{spec\_json}. A semente é registrada em \texttt{seed}, enquanto os campos \texttt{iniciado\_em} e \texttt{terminado\_em} situam a execução no tempo. O campo \texttt{status} representa seu estado, e \texttt{etapas\_json} preserva informações sobre o processamento realizado.
+A especificação é armazenada no campo \texttt{spec\_json}. A semente é registrada em \texttt{seed}, enquanto os campos \texttt{iniciado\_em} e \texttt{terminado\_em} situam a execução no tempo. O campo \texttt{status} representa seu estado, e \texttt{etapas\_json} registra a duração de cada etapa, em segundos, quando a execução é cronometrada; nas execuções sem cronometragem, o campo fica vazio.
 
 A tabela \texttt{quality\_reports} armazena as métricas de qualidade vinculadas às execuções. Cada registro possui uma chave estrangeira para \texttt{runs} e um campo \texttt{metrics\_json} com as medidas correspondentes. Essa associação permite interpretar as métricas em conjunto com a especificação que produziu o resultado.
 
@@ -457,7 +457,7 @@ Na tabela \texttt{decisions}, não existe uma restrição de unicidade para a co
 
 O esquema declara exclusão em cascata em relacionamentos de dependência. Entre eles estão os vínculos entre estudo e matriz, matriz e amostra, e execução e relatório de qualidade. Essa política expressa que determinados registros dependentes devem ser removidos quando a entidade principal correspondente é excluída.
 
-No SQLite utilizado pelo aplicativo, a configuração de conexão não habilita a aplicação automática das chaves estrangeiras. Consequentemente, a declaração de exclusão em cascata não é suficiente para executar a remoção dos registros dependentes. A limpeza é realizada explicitamente pela camada de persistência, respeitando a ordem das dependências.
+No SQLite utilizado pelo aplicativo, a configuração de conexão não habilita a aplicação automática das chaves estrangeiras. Consequentemente, a declaração de exclusão em cascata não é suficiente para executar a remoção dos registros dependentes. Por isso, a única remoção que o aplicativo faz, a poda do histórico de execuções do multiverso, apaga explicitamente os registros dependentes antes dos principais, respeitando a ordem das dependências.
 
 Essa característica delimita a responsabilidade dos mecanismos de integridade. Os relacionamentos permanecem definidos no esquema, mas sua aplicação automática depende da configuração do banco. No ambiente utilizado pelo produto, os procedimentos de escrita e exclusão precisam preservar a consistência dos vínculos.
 
@@ -473,7 +473,7 @@ As migrações são gerenciadas com Alembic e organizadas em uma cadeia linear d
 
 Entre as alterações realizadas estão a inclusão dos campos destinados a registrar a apresentação da proposta e a sobrescrita de parâmetros nas decisões. Essas mudanças ampliaram a capacidade de representar a intervenção do profissional, preservando informações que não eram expressas apenas pela configuração final.
 
-As migrações também permitem corrigir a nomenclatura de atributos quando ela não corresponde à quantidade armazenada. A distinção entre valor-p e valor-q, por exemplo, exige que o nome do campo represente corretamente a aplicação de ajuste para múltiplos testes. A evolução do esquema envolve, portanto, tanto mudanças estruturais quanto adequações semânticas.
+As migrações também permitem corrigir a nomenclatura de atributos quando ela não corresponde à quantidade armazenada. A distinção entre valor-p e valor-q, por exemplo, levou a renomear uma coluna das tabelas do multiverso, para que o nome representasse o ajuste para múltiplos testes. A evolução do esquema envolve, portanto, tanto mudanças estruturais quanto adequações semânticas.
 
 As operações de alteração de tabelas precisam considerar as limitações do SQLite. Quando uma mudança não pode ser aplicada diretamente, utiliza-se um procedimento de cópia e substituição: a estrutura atualizada é criada, os dados compatíveis são transferidos e a tabela anterior é substituída. Esse mecanismo permite realizar alterações preservando os registros abrangidos pela migração.
 
@@ -619,7 +619,7 @@ Esse procedimento pressupõe que a variação técnica possa ser representada po
 
 O método SERRF utiliza florestas aleatórias para estimar o comportamento de cada variável a partir de informações de aquisição e do comportamento de outras variáveis. O ajuste utiliza os QCs como referência, e as previsões participam do cálculo do sinal corrigido.
 
-A implementação em Python emprega os recursos de floresta aleatória do scikit-learn. Sua comparação com o código de referência em R considera que bibliotecas diferentes podem produzir ajustes diferentes mesmo quando o procedimento geral e os parâmetros são correspondentes. Por isso, a fidelidade das etapas e a qualidade da correção são avaliadas separadamente.
+A implementação em Python usa, por padrão, uma floresta que reproduz a amostragem do \textit{ranger}, do R, construída sobre as árvores de decisão do scikit-learn. Sua comparação com o código de referência em R considera que bibliotecas diferentes podem produzir ajustes diferentes mesmo quando o procedimento geral e os parâmetros são correspondentes. Por isso, a fidelidade das etapas e a qualidade da correção são avaliadas separadamente.
 
 Os corretores retornam a matriz resultante e informações sobre o tratamento realizado. Quando uma variável não pode ser corrigida, sua condição é acompanhada por uma causa registrada. Essa separação permite distinguir a aplicação efetiva do método das situações em que os valores foram preservados por impossibilidade de correção.
 
@@ -646,7 +646,7 @@ O tratamento de valores ausentes considera sua proporção dentro dos grupos exp
 
 Após a filtragem, a imputação preenche os valores ausentes conforme o método selecionado. Entre as alternativas implementadas estão procedimentos baseados em valores mínimos, média, mediana e vizinhos mais próximos. A escolha do método faz parte da especificação de processamento e permanece registrada.
 
-Os zeros e os valores ausentes exigem tratamento explícito, pois não representam necessariamente a mesma condição. A interpretação adotada pelo processamento deve considerar a representação do arquivo e o procedimento selecionado, evitando substituir automaticamente toda ocorrência de zero por um valor imputado.
+Os zeros exigem tratamento explícito. Neste domínio, o equipamento deixa a célula vazia ou com zero quando não detecta o sinal, e o caso dominante é o de concentração abaixo do limite de detecção. Por isso, o processamento trata o zero como valor ausente e o imputa pelo método selecionado.
 
 A normalização por amostra atua sobre diferenças globais entre as linhas da matriz. Entre as opções disponíveis estão normalização por soma, mediana, quantis e procedimentos baseados em quocientes. A aplicação depende da configuração escolhida e das condições exigidas pelo método.
 
@@ -713,7 +713,7 @@ A matriz corrigida contém o resultado da aplicação do corretor, enquanto a ma
 
 A exportação para o MetaboAnalyst organiza os dados no formato previsto pelo fluxo de interoperabilidade. O aplicativo prepara o arquivo, e seu envio à plataforma é realizado pelo usuário. A exportação não corresponde a uma transferência automática da matriz para um serviço externo.
 
-O procedimento adota um limite de 5.000 variáveis para o arquivo destinado ao MetaboAnalyst. Quando o conjunto excede esse limite, a seleção utiliza ordenação fundamentada no RSD dos QCs, preservando o critério utilizado para reduzir a matriz.
+O procedimento adota, por padrão, um limite de 5.000 variáveis para o arquivo destinado ao MetaboAnalyst, ajustável de 1 a 100.000. Quando o conjunto excede esse limite, a seleção utiliza ordenação fundamentada no RSD dos QCs, preservando o critério utilizado para reduzir a matriz.
 
 As variáveis removidas e o motivo do corte devem permanecer identificáveis no registro da exportação. Dessa forma, a redução não é realizada como uma alteração manual sem procedência, e o profissional pode verificar quais sinais foram excluídos para atender ao formato de destino.
 
@@ -756,7 +756,7 @@ A distribuição é realizada em uma pasta que contém o executável e suas depe
 \subsection{Organização das telas e fluxo de utilização}
 \label{subsec:organizacao-telas-fluxo}
 
-A interface é organizada em abas que agrupam as operações conforme sua finalidade. O fluxo principal compreende a preparação do estudo, a configuração e a execução do tratamento, a avaliação da qualidade e a inspeção dos gráficos. Uma área fixa de trabalhos em curso permite acompanhar as operações iniciadas durante a utilização do aplicativo.
+A interface é organizada em abas que agrupam as operações conforme sua finalidade. O fluxo principal compreende a preparação do estudo, a configuração e a execução do tratamento, a avaliação da qualidade e a inspeção dos gráficos. Uma área fixa de trabalhos em curso permite acompanhar as operações iniciadas durante a utilização do aplicativo. Além dessas, duas abas trazem funcionalidades em versão beta, fora do escopo deste trabalho, a análise de multiverso e as vias metabólicas, e a última, ``O que este aplicativo NÃO faz'', descreve os limites da ferramenta, num total de sete abas.
 
 A aba \textit{Preparar o estudo} concentra a seleção dos arquivos de entrada e a verificação das informações necessárias ao processamento. Nesse ponto, o usuário informa a matriz de medições e a lista de amostras correspondentes. A aplicação utiliza essas entradas para associar os valores medidos aos metadados, incluindo a ordem de injeção.
 
