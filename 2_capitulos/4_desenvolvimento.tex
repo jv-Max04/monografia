@@ -20,7 +20,7 @@ Os requisitos foram organizados para relacionar as necessidades do laboratório 
 
 \subsection{Processo de levantamento dos requisitos}
 
-O levantamento ocorreu por meio de reuniões presenciais e online, trocas de mensagens pelo WhatsApp, comunicações por email e uma demonstração presencial no laboratório de metabolômica. Essas interações permitiram conhecer o fluxo de trabalho dos pesquisadores e discutir os arquivos utilizados, as dificuldades de preparação dos dados e as informações necessárias para avaliar um tratamento. A demonstração também forneceu um contexto de uso para discutir a organização da interface e o encadeamento das operações.
+O levantamento ocorreu por meio de reuniões presenciais e on-line, trocas de mensagens pelo WhatsApp, comunicações por e-mail e uma demonstração presencial no Laboratório de Metabolômica. Essas interações permitiram conhecer o fluxo de trabalho dos pesquisadores e discutir os arquivos utilizados, as dificuldades de preparação dos dados e as informações necessárias para avaliar um tratamento. A demonstração também forneceu um contexto de uso para discutir a organização da interface e o encadeamento das operações.
 
 As informações obtidas foram complementadas pela análise das matrizes de medições, dos arquivos de descrição das amostras e dos procedimentos de referência em R disponibilizados ao projeto. Essa análise aproximou os relatos dos usuários das condições concretas de processamento: estrutura dos arquivos, representação das intensidades, identificação dos controles de qualidade, ordem de injeção e associação das amostras aos grupos experimentais. O arquivo de medições e sua lista de amostras passaram, dessa forma, a constituir uma entrada conjunta, cuja coerência precisa ser verificada antes do cálculo.
 
@@ -42,7 +42,7 @@ Os principais casos de uso do fluxo entregue são os seguintes:
 \begin{enumerate}
 \item \textbf{Preparar e validar o estudo:} selecionar o par de arquivos e o modo de aquisição, verificar sua estrutura e examinar os erros e avisos encontrados.
 \item \textbf{Diagnosticar os dados:} consultar indicadores de qualidade, indícios de variação técnica e propostas de organização dos lotes.
-\item \textbf{Definir a correção:} examinar os indicadores de qualidade, comparar os métodos disponíveis e selecionar o corretor que será aplicado.
+\item \textbf{Definir a correção:} aceitar o corretor que o palpite propõe, aplicado por padrão pela caixa ``Automático'', ou desmarcá-la, comparar os métodos disponíveis e selecionar o corretor que será aplicado.
 \item \textbf{Executar o tratamento:} configurar e realizar a correção e o pré-processamento, pelo fluxo completo ou por etapas, com acompanhamento do trabalho.
 \item \textbf{Avaliar os resultados:} consultar as métricas e as figuras correspondentes à matriz e ao estágio de processamento considerado.
 \item \textbf{Obter os artefatos:} gerar e salvar as matrizes corrigida e processada e exportar a entrada compatível com o MetaboAnalyst.
@@ -63,19 +63,19 @@ Os identificadores abaixo acompanham o levantamento relacionado ao plano de test
 \item[RF-01 --- Seleção da entrada.] Permitir selecionar os arquivos de medições e de descrição das amostras e informar o modo de aquisição, distinguindo a finalidade de cada arquivo.
 \item[RF-02 --- Validação.] Verificar a estrutura e a coerência da entrada, apresentar erros e avisos e impedir a continuidade quando houver condição incompatível com o processamento solicitado.
 \item[RF-03 --- Diagnóstico.] Produzir um perfil dos dados e apresentar o diagnóstico e as propostas de fronteiras de lote, preservando a distinção entre indicação computacional e confirmação pelo pesquisador.
-\item[RF-04 --- Apoio à escolha.] Permitir a comparação dos métodos de correção por meio de sua execução e da apresentação dos indicadores de qualidade, identificando o critério empregado e mantendo com o pesquisador a escolha do método a aplicar.
+\item[RF-04 --- Apoio à escolha.] Propor o corretor por uma medição sobre a própria matriz e, por padrão, aplicá-lo pela caixa ``Automático''; permitir que o pesquisador a desmarque, compare os métodos de correção por meio de sua execução e da apresentação dos indicadores de qualidade e escolha o método a aplicar, identificando o critério empregado.
 \item[RF-05 --- Correção.] Disponibilizar as opções \texttt{none}, \texttt{serrf} e \texttt{loess}. A primeira mantém o sinal sem correção e permite estabelecer uma condição de comparação.
 \item[RF-06 --- Grupos experimentais.] Receber e validar o par de grupos utilizado nas análises que exigem essa definição, recusando referências a grupos inexistentes.
 \item[RF-07 --- Validação do PLS-DA.] Apresentar o PLS-DA acompanhado do Q$^{2}$ e do valor de $p$ obtido por permutação, evitando que a separação visual seja apresentada isoladamente como evidência suficiente de validade estatística do resultado.
 \item[RF-08 --- Reprodução.] Permitir repetir o processamento com a mesma entrada, configuração e semente no ambiente considerado.
 \item[RF-09 --- Progresso.] Atualizar o acompanhamento dos trabalhos do fluxo principal sem exigir que o pesquisador solicite manualmente cada leitura.
 \item[RF-10 --- Matrizes de saída.] Gerar e salvar os artefatos de correção e pré-processamento, distinguindo o estágio representado por cada arquivo.
-\item[RF-11 --- Exportação.] Produzir arquivo no formato de intercâmbio com o MetaboAnalyst e, quando aplicado o teto de 5.000 variáveis definido pelo projeto, selecionar pelo critério de RSD e registrar as exclusões. Esse teto descreve a política implementada no MetaRefino, sem constituir afirmação universal sobre todas as modalidades de uso da ferramenta externa.
+\item[RF-11 --- Exportação.] Produzir arquivo no formato de intercâmbio com o MetaboAnalyst e, quando aplicado o teto de 5.000 variáveis, padrão adotado pelo projeto a partir do limite relatado pelo laboratório para a versão web do MetaboAnalyst, selecionar pelo critério de RSD e registrar as exclusões. Esse teto descreve a política implementada no MetaRefino, sem constituir afirmação universal sobre todas as modalidades de uso da ferramenta externa.
 \item[RF-13 --- Cancelamento.] Permitir solicitar a interrupção dos trabalhos acompanhados pela aplicação e informar seu estado.
 \item[RF-15 --- Qualidade.] Exibir um conjunto de métricas de qualidade e identificar a variante e o estimador utilizados, permitindo interpretar os resultados além de um único indicador.
 \item[RF-16 --- Limites.] Apresentar as restrições da aplicação e o alcance das operações oferecidas.
 \item[RF-17 --- Linha de comando.] Oferecer os comandos de correção, processamento e exportação com compartilhamento dos mecanismos de geração dos artefatos e registro da configuração utilizada.
-\item[RF-18 --- Análises estatísticas.] Permitir solicitar as análises implementadas no fluxo da janela, incluindo PCA, PLS-DA binário, comparação univariada entre grupos, ANOVA, PERMANOVA, correlações e agrupamentos, respeitando os parâmetros e as condições exigidos por cada procedimento.
+\item[RF-18 --- Análises estatísticas.] Permitir solicitar as análises implementadas no fluxo da janela, incluindo PCA, PLS-DA binário, classificadores por floresta aleatória e por máquina de vetores de suporte, comparação univariada entre grupos, ANOVA, PERMANOVA, correlações e agrupamentos, respeitando os parâmetros e as condições exigidos por cada procedimento.
 \item[RF-19 --- Visualização.] Reunir as figuras em um seletor, permitir sua inspeção e oferecer os recursos de ampliação e exportação. As figuras devem identificar a matriz e o contexto de processamento a que se referem.
 \item[RF-20 --- Qualidade da correção.] Apresentar figuras de diagnóstico e comparação antes e depois do tratamento, incluindo trajetória dos QCs, dispersão, RSD e composição das amostras, indicando quando faltam dados necessários para uma representação.
 \end{description}
@@ -104,7 +104,7 @@ Os requisitos de portabilidade do produto também diferem dos pré-requisitos de
 
 \subsection{Critérios de aceitação e rastreabilidade}
 
-Os critérios de aceitação traduzem requisitos em condições verificáveis. A documentação técnica utiliza identificadores \texttt{CA} para critérios e \texttt{TO} para testes obrigatórios; o plano do grupo utiliza identificadores \texttt{CT} para cenários. Essas categorias cumprem funções complementares: o requisito descreve o comportamento, o critério define a condição esperada e o teste estabelece o procedimento para verificar essa condição.
+Os critérios de aceitação traduzem requisitos em condições verificáveis. A documentação técnica utiliza identificadores \texttt{CA} para critérios e \texttt{TO} para testes obrigatórios; o plano do grupo utiliza identificadores \texttt{CT} para cenários. Essas categorias cumprem funções complementares: o requisito descreve o comportamento, o critério define a condição esperada e o teste estabelece o procedimento para verificar essa condição. A Tabela~\ref{tab:4-rastreabilidade} relaciona exemplos de requisitos do fluxo principal aos casos do plano que os verificam.
 
 \begin{table}[htbp]
 \centering
@@ -126,7 +126,7 @@ RNF-06 & Restrição da comunicação à máquina local. & CT-SEG-001 \\ \hline
 \par\smallskip{\footnotesize Fonte: elaboração dos autores a partir do plano de testes e da documentação do projeto.}
 \end{table}
 
-No processamento por etapas, essa relação é complementada pelos arquivos \texttt{test\_api\_etapas.py} e \texttt{test\_desktop\_etapas.py}, que exercitam o contrato das prévias e o estado das etapas na interface. A paridade entre linha de comando e API é tratada em testes próprios, assim como o endereço de escuta e o arranque do servidor. A associação de um requisito a um arquivo de teste indica onde sua verificação é implementada; o resultado e as condições de execução são discutidos no capítulo seguinte.
+No processamento por etapas, essa relação é complementada pelos arquivos \texttt{test\_\allowbreak{}api\_\allowbreak{}etapas.py} e \texttt{test\_\allowbreak{}desktop\_\allowbreak{}etapas.py}, que exercitam o contrato das prévias e o estado das etapas na interface. A paridade entre linha de comando e API é tratada em testes próprios, assim como o endereço de escuta e o arranque do servidor. A associação de um requisito a um arquivo de teste indica onde sua verificação é implementada; o resultado e as condições de execução são discutidos no capítulo seguinte.
 
 O desenvolvimento também utiliza testes negativos, nos quais uma condição inválida deve provocar uma recusa ou uma reprovação. Essa prática permite verificar se o mecanismo detecta o defeito que pretende impedir. Quando há comparação com o processamento em R, a referência, os dados, a semente, a tolerância e o ambiente compõem o contexto da evidência. Por isso, critérios pendentes, testes pulados por ausência de dados e divergências conhecidas não são classificados automaticamente como funcionalidades validadas.
 
@@ -138,7 +138,7 @@ O planejamento articulou o calendário acadêmico, o acompanhamento do orientado
 
 \subsection{Etapas de desenvolvimento}
 
-No primeiro semestre, as atividades compreenderam a definição do grupo e do tema, a ideação, a preparação do vídeo de apresentação da proposta, a definição da orientação, a aprovação do escopo e a elaboração dos capítulos iniciais. A apresentação do TCC I e os ajustes decorrentes das orientações recebidas constituíram os marcos de transição para a continuidade do trabalho.
+No primeiro semestre, as atividades compreenderam a definição do grupo e do tema, a ideação, a preparação do vídeo de apresentação da proposta, a definição da orientação, a aprovação do escopo e a elaboração dos capítulos iniciais. O grupo iniciou o ano com outra proposta, de auxílio ao diagnóstico da apneia do sono, que não teve continuidade; o tema atual, em metabolômica, passou a ser desenvolvido em abril. A apresentação do TCC I e os ajustes decorrentes das orientações recebidas constituíram os marcos de transição para a continuidade do trabalho.
 
 No desenvolvimento técnico, a aplicação foi decomposta em fases de fundação, ingestão e validação, métricas de qualidade, correção, diagnóstico, pré-processamento, estatística, geração sintética, decisão, persistência, interoperabilidade e interface. Essa decomposição descreve a organização da implementação, não uma declaração de que todos os critérios de todas as fases foram atendidos.
 
@@ -212,9 +212,9 @@ O cronograma de acompanhamento estabelecido pelo orientador previu a consolidaç
 
 Para novembro, o acompanhamento previa a entrega ao orientador em 9 de novembro, a aprovação em 18 de novembro, a revisão final em 19 de novembro e a finalização dos materiais em 25 de novembro. Há diferenças entre esses marcos e os prazos institucionais de aprovação, em 16 de novembro, de entrega do vídeo, em 19 de novembro, e de distribuição à banca, em 23 de novembro. Para efeito do planejamento apresentado, os prazos institucionais mais antecipados constituem as referências de entrega; os marcos posteriores de acompanhamento não os substituem.
 
-A Figura~\ref{fig:4-gantt} apresenta um Gantt sintético em escala mensal. As faixas representam a organização geral das atividades acadêmicas e técnicas, combinando o planejamento informado e o período documentado de implementação. Não representam medições de esforço individual ou datas exatas de início e término de cada tarefa. A distribuição nominal das responsabilidades é detalhada na subseção seguinte.
+O Quadro~\ref{fig:4-gantt} apresenta um Gantt sintético em escala mensal. As faixas representam a organização geral das atividades acadêmicas e técnicas, combinando o planejamento informado e o período documentado de implementação. Não representam medições de esforço individual ou datas exatas de início e término de cada tarefa. A primeira faixa corresponde à proposta inicial do grupo, de auxílio ao diagnóstico da apneia do sono, trabalhada em fevereiro e março e não continuada; as demais referem-se ao projeto atual, iniciado em abril. A distribuição nominal das responsabilidades é detalhada na subseção seguinte.
 
-\begin{figure}[htbp]
+\begin{quadro}[htbp]
 \centering
 \caption{Diagrama de Gantt sintético das atividades do projeto em 2026.}
 \label{fig:4-gantt}
@@ -224,7 +224,8 @@ A Figura~\ref{fig:4-gantt} apresenta um Gantt sintético em escala mensal. As fa
 \begin{tabularx}{\textwidth}{|X|*{11}{c|}}
 \hline
 \textbf{Atividade e equipe} & Fev & Mar & Abr & Mai & Jun & Jul & Ago & Set & Out & Nov & Dez \\ \hline
-Ideação e escopo (grupo) & X & X & X & & & & & & & & \\ \hline
+Proposta inicial: diagnóstico da apneia do sono, não continuada (grupo) & X & X & & & & & & & & & \\ \hline
+Ideação e escopo do tema atual (grupo) & & & X & & & & & & & & \\ \hline
 Fundamentação e texto (monografia) & & & X & X & X & & & X & X & X & X \\ \hline
 Núcleo e integração (desenvolvimento) & & & & & & X & X & X & X & & \\ \hline
 Janela e distribuição (desenvolvimento) & & & & & & & X & X & X & X & \\ \hline
@@ -234,11 +235,11 @@ Apresentação e ajustes finais (grupo) & & & & & X & & & & & X & X \\ \hline
 \end{tabularx}
 \endgroup
 \par\smallskip{\footnotesize Fonte: elaboração dos autores a partir dos cronogramas informados e dos planos de desenvolvimento. X indica o mês abrangido pela atividade; as faixas constituem uma síntese do planejamento.}
-\end{figure}
+\end{quadro}
 
 As atividades de novembro e dezembro são apresentadas como previstas quando não há registro de sua conclusão. Da mesma forma, a disponibilização da aplicação ao laboratório e a avaliação pelos usuários constituem atividades diferentes: o envio do software não encerra a coleta de retorno. O estado da avaliação deve ser considerado na interpretação dos resultados apresentados no capítulo de testes.
 
-A avaliação pelo laboratório possui protocolo próprio e não se confunde com os testes internos. Como descrito na Seção~\ref{sec:5-4}, os profissionais usaram o aplicativo no próprio computador, deram feedbacks informais ao longo do uso e entregaram um relatório de feedback escrito, recebido em 05/11/2026. A conclusão da tarefa é autodeclarada; o protocolo não produz observação direta dos gestos nem medição do tempo de execução pelo participante.
+A avaliação pelo laboratório possui protocolo próprio e não se confunde com os testes internos. Como descrito na Seção~\ref{sec:5-4}, os profissionais usaram o aplicativo no próprio computador, deram feedbacks informais ao longo do uso e entregaram uma devolutiva técnica escrita, recebida em 05/11/2026. A conclusão da tarefa é autodeclarada; o protocolo não produz observação direta dos gestos nem medição do tempo de execução pelo participante.
 
 \subsection{Papéis e responsabilidades dos integrantes}
 
@@ -255,8 +256,8 @@ A divisão de responsabilidades considerou as frentes de desenvolvimento, redaç
 Gabriel Campari Correia & Revisão, reestruturação e continuidade da monografia. \\ \hline
 Gabriel Henrique Imolene Vieira & Revisão, reestruturação e continuidade da monografia. \\ \hline
 Gustavo Almeida de Moura & Desenvolvimento da aplicação e implementação das funcionalidades do projeto. \\ \hline
-João Victor Maximiano Vieira & Participação na elaboração da monografia e realização dos testes e validações e comunicação com o laboratório de metabolômica. \\ \hline
-Kaick Kenithi Nishiya & Coordenação do desenvolvimento, implementação de funcionalidades, participação nos testes e validações . \\ \hline
+João Victor Maximiano Vieira & Participação na elaboração da monografia e realização dos testes e validações e comunicação com o Laboratório de Metabolômica. \\ \hline
+Kaick Kenithi Nishiya & Coordenação do desenvolvimento, implementação de funcionalidades, participação nos testes e validações. \\ \hline
 Lucas Secanho do Prado & Desenvolvimento da aplicação e implementação das funcionalidades do projeto. \\ \hline
 \end{tabularx}
 \par\smallskip{\footnotesize Fonte: divisão de responsabilidades informada pelos integrantes.}
@@ -323,7 +324,7 @@ A janela coleta os arquivos e os valores dos controles e os encaminha ao cliente
 
 Trabalhos demorados são despachados e identificados para acompanhamento posterior. A janela consulta o progresso por temporizadores do Qt, evitando depender de uma interação manual a cada atualização. A separação entre disparo e leitura do estado permite manter a interface operacional durante o cálculo e oferecer a solicitação de cancelamento. Esse cancelamento é cooperativo: o pedido é observado nos pontos previstos pelo processamento.
 
-O fluxo por etapas utiliza as rotas \texttt{/etapas/correcao} e \texttt{/etapas/pre-processamento} para as prévias, e \texttt{/execucoes} para a execução final. Cada pedido transporta as informações necessárias à operação. A sequência percorrida pelo usuário é controlada pela janela; não depende de uma sessão implícita de etapas no servidor. Isso não significa que o servidor seja desprovido de estado: ele mantém registros dos trabalhos e um mecanismo de reutilização de correções em memória.
+{\sloppy O fluxo por etapas utiliza as rotas \texttt{/etapas/\allowbreak{}correcao} e \texttt{/etapas/\allowbreak{}pre-processamento} para as prévias, e \texttt{/execucoes} para a execução final. Cada pedido transporta as informações necessárias à operação. A sequência percorrida pelo usuário é controlada pela janela; não depende de uma sessão implícita de etapas no servidor. Isso não significa que o servidor seja desprovido de estado: ele mantém registros dos trabalhos e um mecanismo de reutilização de correções em memória.\par}
 
 Na interface, cada etapa conserva uma representação dos parâmetros e da identidade das entradas utilizados no disparo. Essa representação é comparada com a configuração corrente para classificar a etapa como não realizada, em curso, atualizada ou desatualizada. A alteração de um campo da correção afeta seus resultados e os das etapas dependentes; uma alteração exclusiva da etapa final não invalida necessariamente a correção já calculada. Assim, a validade do resultado está ligada aos valores que o produziram.
 
@@ -385,7 +386,7 @@ Essa necessidade está relacionada à natureza do pré-processamento metabolômi
 
 O armazenamento é organizado a partir do estudo e de suas matrizes. Cada estudo reúne os conjuntos de dados pertencentes a um mesmo contexto experimental. Cada matriz, por sua vez, possui informações sobre o modo de aquisição, a quantidade de amostras, a quantidade de variáveis e a soma de verificação da entrada. Essa organização permite distinguir conjuntos de dados e associar os registros posteriores à matriz correspondente.
 
-A soma de verificação, armazenada no campo \texttt{checksum\_entrada}, contribui para a identificação do conteúdo utilizado no processamento. O nome do arquivo não é suficiente para essa finalidade, pois pode ser alterado sem modificar os dados ou mantido após uma edição de seu conteúdo. O registro do \textit{checksum} permite verificar se um arquivo corresponde à entrada associada à matriz persistida.
+A soma de verificação, armazenada no campo \texttt{checksum\_\allowbreak{}entrada}, contribui para a identificação do conteúdo utilizado no processamento. O nome do arquivo não é suficiente para essa finalidade, pois pode ser alterado sem modificar os dados ou mantido após uma edição de seu conteúdo. O registro do \textit{checksum} permite verificar se um arquivo corresponde à entrada associada à matriz persistida.
 
 O banco também preserva os metadados das amostras. Informações como ordem de injeção, tipo de amostra, grupo experimental e lote participam da interpretação dos dados e das operações de correção. Seu armazenamento mantém esses elementos associados à matriz, permitindo recuperar o contexto em que as medições foram obtidas.
 
@@ -395,7 +396,7 @@ A persistência mantém essas informações disponíveis após o encerramento da
 
 O armazenamento local também atende às condições de utilização do aplicativo no laboratório. Como o SQLite mantém o banco em um arquivo, a aplicação não depende de um serviço de banco de dados separado para registrar suas operações. Essa característica simplifica a implantação e permite que o processamento e a persistência sejam realizados no próprio computador utilizado pelo profissional.
 
-O banco complementa os arquivos científicos e os relatórios gerados. A recuperação completa do contexto de uma análise exige a conservação desses elementos em conjunto: os registros persistidos descrevem o processamento, os arquivos mantêm os dados de entrada e de saída, e os relatórios apresentam os resultados e as informações necessárias à sua interpretação.
+O banco complementa os arquivos científicos e os arquivos de saída: as matrizes em CSV, no formato do pipeline anterior, normalizadas ou para o MetaboAnalyst, e a lista das variáveis removidas. A recuperação completa do contexto de uma análise exige a conservação desses elementos em conjunto: os registros persistidos descrevem o processamento, os arquivos mantêm os dados de entrada e de saída, e os arquivos de saída trazem os resultados e o que foi removido em cada etapa.
 
 \subsection{Modelo de dados e relacionamentos}
 \label{subsec:modelo-dados-relacionamentos}
@@ -406,7 +407,7 @@ As tabelas são definidas com SQLAlchemy Core, e o acesso aos registros é reali
 
 A tabela \texttt{studies} representa o estudo. Seus atributos incluem um identificador, o nome, a descrição e a data de criação. O nome possui uma restrição de unicidade, permitindo diferenciar os estudos registrados no banco. Essa entidade constitui o nível superior de organização dos dados.
 
-A tabela \texttt{matrices} representa as matrizes associadas aos estudos. Cada registro contém o identificador do estudo, o modo de aquisição, a quantidade de amostras, a quantidade de variáveis e a soma de verificação do arquivo de entrada. O campo \texttt{study\_id} estabelece o vínculo com \texttt{studies}.
+A tabela \texttt{matrices} representa as matrizes associadas aos estudos. Cada registro contém o identificador do estudo, o modo de aquisição, a quantidade de amostras, a quantidade de variáveis e a soma de verificação do par de arquivos de entrada, as medidas e a lista de amostras. O campo \texttt{study\_\allowbreak{}id} estabelece o vínculo com \texttt{studies}.
 
 O relacionamento entre estudo e matriz é de um para muitos. Um estudo pode reunir diversas matrizes, enquanto cada matriz pertence a um estudo. Essa cardinalidade permite representar diferentes condições de aquisição dentro de um mesmo contexto experimental, preservando a identificação individual de cada conjunto de dados.
 
@@ -416,7 +417,7 @@ A ordem de injeção é obrigatória porque representa a posição da amostra na
 
 O tipo de amostra e o grupo experimental possuem funções distintas. O tipo identifica a natureza da amostra no processamento, incluindo as amostras de controle de qualidade. O grupo representa sua classificação experimental. O lote identifica o bloco de aquisição ao qual a amostra pertence. A separação desses atributos evita reunir informações metodologicamente diferentes em um único campo.
 
-A tabela \texttt{diagnoses} registra os diagnósticos produzidos sobre uma matriz. Seus atributos incluem o identificador da matriz, o tipo de defeito identificado, a confiança atribuída ao diagnóstico, o perfil utilizado na avaliação e a data de criação. O campo \texttt{profile\_json} conserva a representação detalhada desse perfil.
+A tabela \texttt{diagnoses} registra os diagnósticos produzidos sobre uma matriz. Seus atributos incluem o identificador da matriz, o tipo de defeito identificado, a confiança atribuída ao diagnóstico, o perfil utilizado na avaliação e a data de criação. O campo \texttt{profile\_\allowbreak{}json} conserva a representação detalhada desse perfil.
 
 O relacionamento entre matriz e diagnóstico é de um para muitos. Essa organização permite manter diferentes avaliações associadas à mesma matriz, sem substituir sua identificação ou alterar seus metadados de origem.
 
@@ -430,9 +431,9 @@ A tabela \texttt{runs} representa as execuções do pipeline. Cada execução es
 
 O relacionamento entre matriz e execução é de um para muitos. Assim, uma mesma matriz pode ser processada diversas vezes, inclusive com configurações diferentes. A separação entre essas entidades evita confundir o conjunto de dados recebido com uma tentativa específica de tratamento.
 
-A especificação é armazenada no campo \texttt{spec\_json}. A semente é registrada em \texttt{seed}, enquanto os campos \texttt{iniciado\_em} e \texttt{terminado\_em} situam a execução no tempo. O campo \texttt{status} representa seu estado, e \texttt{etapas\_json} preserva informações sobre o processamento realizado.
+A especificação é armazenada no campo \texttt{spec\_\allowbreak{}json}. A semente é registrada em \texttt{seed}, enquanto os campos \texttt{iniciado\_\allowbreak{}em} e \texttt{terminado\_\allowbreak{}em} situam a execução no tempo. O campo \texttt{status} representa seu estado, e \texttt{etapas\_\allowbreak{}json} registra a duração de cada etapa, em segundos, quando a execução é cronometrada; nas execuções sem cronometragem, o campo fica vazio.
 
-A tabela \texttt{quality\_reports} armazena as métricas de qualidade vinculadas às execuções. Cada registro possui uma chave estrangeira para \texttt{runs} e um campo \texttt{metrics\_json} com as medidas correspondentes. Essa associação permite interpretar as métricas em conjunto com a especificação que produziu o resultado.
+A tabela \texttt{quality\_\allowbreak{}reports} armazena as métricas de qualidade vinculadas às execuções. Cada registro possui uma chave estrangeira para \texttt{runs} e um campo \texttt{metrics\_\allowbreak{}json} com as medidas correspondentes. Essa associação permite interpretar as métricas em conjunto com a especificação que produziu o resultado.
 
 A vinculação do relatório à execução é necessária porque a qualidade observada depende do processamento aplicado. Uma mesma matriz pode apresentar resultados diferentes após alterações no método de correção ou nos parâmetros de pré-processamento. Portanto, as métricas são relacionadas à execução correspondente, mantendo o contexto de sua obtenção.
 
@@ -457,7 +458,7 @@ Na tabela \texttt{decisions}, não existe uma restrição de unicidade para a co
 
 O esquema declara exclusão em cascata em relacionamentos de dependência. Entre eles estão os vínculos entre estudo e matriz, matriz e amostra, e execução e relatório de qualidade. Essa política expressa que determinados registros dependentes devem ser removidos quando a entidade principal correspondente é excluída.
 
-No SQLite utilizado pelo aplicativo, a configuração de conexão não habilita a aplicação automática das chaves estrangeiras. Consequentemente, a declaração de exclusão em cascata não é suficiente para executar a remoção dos registros dependentes. A limpeza é realizada explicitamente pela camada de persistência, respeitando a ordem das dependências.
+No SQLite utilizado pelo aplicativo, a configuração de conexão não habilita a aplicação automática das chaves estrangeiras. Consequentemente, a declaração de exclusão em cascata não é suficiente para executar a remoção dos registros dependentes. Por isso, a única remoção que o aplicativo faz, a poda do histórico de execuções do multiverso, apaga explicitamente os registros dependentes antes dos principais, respeitando a ordem das dependências.
 
 Essa característica delimita a responsabilidade dos mecanismos de integridade. Os relacionamentos permanecem definidos no esquema, mas sua aplicação automática depende da configuração do banco. No ambiente utilizado pelo produto, os procedimentos de escrita e exclusão precisam preservar a consistência dos vínculos.
 
@@ -473,7 +474,7 @@ As migrações são gerenciadas com Alembic e organizadas em uma cadeia linear d
 
 Entre as alterações realizadas estão a inclusão dos campos destinados a registrar a apresentação da proposta e a sobrescrita de parâmetros nas decisões. Essas mudanças ampliaram a capacidade de representar a intervenção do profissional, preservando informações que não eram expressas apenas pela configuração final.
 
-As migrações também permitem corrigir a nomenclatura de atributos quando ela não corresponde à quantidade armazenada. A distinção entre valor-p e valor-q, por exemplo, exige que o nome do campo represente corretamente a aplicação de ajuste para múltiplos testes. A evolução do esquema envolve, portanto, tanto mudanças estruturais quanto adequações semânticas.
+As migrações também permitem corrigir a nomenclatura de atributos quando ela não corresponde à quantidade armazenada. A distinção entre valor-p e valor-q, por exemplo, levou a renomear uma coluna das tabelas do multiverso, para que o nome representasse o ajuste para múltiplos testes. A evolução do esquema envolve, portanto, tanto mudanças estruturais quanto adequações semânticas.
 
 As operações de alteração de tabelas precisam considerar as limitações do SQLite. Quando uma mudança não pode ser aplicada diretamente, utiliza-se um procedimento de cópia e substituição: a estrutura atualizada é criada, os dados compatíveis são transferidos e a tabela anterior é substituída. Esse mecanismo permite realizar alterações preservando os registros abrangidos pela migração.
 
@@ -494,11 +495,11 @@ O segundo elemento é a especificação do processamento. O registro de execuç�
 
 A semente registrada contribui para o controle das operações estocásticas. Sua preservação permite identificar o parâmetro utilizado para inicializar os procedimentos que envolvem aleatoriedade. Entretanto, a repetição da semente deve ser acompanhada da conservação da entrada e de um ambiente computacional compatível para que a reexecução seja interpretada adequadamente.
 
-Os instantes de início e término situam a execução no tempo. O estado informa sua condição registrada, permitindo distinguir o processamento em andamento de seus desfechos. O conteúdo de \texttt{etapas\_json} acrescenta informações sobre as operações realizadas, ampliando o contexto disponível para acompanhamento.
+Os instantes de início e término situam a execução no tempo. O estado informa sua condição registrada, permitindo distinguir o processamento em andamento de seus desfechos. O conteúdo de \texttt{etapas\_\allowbreak{}json} acrescenta informações sobre as operações realizadas, ampliando o contexto disponível para acompanhamento.
 
 A rastreabilidade é limitada ao conteúdo efetivamente persistido. O registro de etapas não equivale a um histórico de todos os eventos internos da aplicação, e o banco não deve ser interpretado como um mecanismo de auditoria integral. Sua finalidade é conservar as informações metodológicas e operacionais previstas no modelo.
 
-As métricas de qualidade são vinculadas à execução por meio de \texttt{quality\_reports}. Essa relação permite consultar o resultado da avaliação junto à configuração que o produziu. Como diferentes medidas representam aspectos distintos do processamento, a análise considera um conjunto de métricas, evitando reduzir a avaliação a um único indicador.
+As métricas de qualidade são vinculadas à execução por meio de \texttt{quality\_\allowbreak{}reports}. Essa relação permite consultar o resultado da avaliação junto à configuração que o produziu. Como diferentes medidas representam aspectos distintos do processamento, a análise considera um conjunto de métricas, evitando reduzir a avaliação a um único indicador.
 
 A preservação das decisões acrescenta outro nível de rastreabilidade. O campo de origem identifica a procedência da sugestão ou da configuração registrada, permitindo distinguir o apoio fornecido pelo sistema da manifestação do usuário. A justificativa permite compreender o motivo registrado, enquanto os campos relacionados à apresentação e à sobrescrita acrescentam informações sobre a interação do profissional com a proposta.
 
@@ -513,7 +514,7 @@ Essa interação é representada por quatro situações:
     \item \textbf{Ausência de proposta:} a configuração é definida manualmente sem uma sugestão do sistema associada.
 \end{enumerate}
 
-A distinção entre ausência de sobrescrita e sobrescrita com concordância é necessária para interpretar a participação do usuário. Executar o processamento sem alterar os controles não demonstra, por si só, que a proposta foi avaliada e confirmada. Por outro lado, exercer o controle e manter a mesma configuração constitui uma manifestação explícita de concordância.
+A distinção entre ausência de sobrescrita e sobrescrita com concordância é necessária para interpretar a participação do usuário. Executar o processamento sem alterar os controles não demonstra, por si só, que a proposta foi avaliada e confirmada. Por outro lado, exercer o controle e manter a mesma configuração constitui uma manifestação explícita de concordância. Na janela, porém, essa distinção não é registrada: como os campos já vêm preenchidos com a proposta, manter a proposta grava a ausência de sobrescrita, e mudar algum campo grava a sobrescrita com discordância. As outras duas situações existem no modelo de dados e na interface de programação.
 
 Quando há proposta e manifestação manual, as duas decisões são gravadas na mesma transação. Esse procedimento evita a persistência parcial do par em caso de falha na operação. A transação preserva a unidade lógica necessária para interpretar a interação entre o sistema e o profissional.
 
@@ -523,7 +524,7 @@ A rastreabilidade também contribui para a reprodutibilidade. O banco preserva a
 
 Os relatórios complementam esse conjunto ao apresentar as informações da execução, as métricas de qualidade e os limites de interpretação dos resultados. Os artefatos exportados preservam os dados entregues ao usuário. A associação entre banco, arquivos e relatórios permite recuperar tanto o produto do tratamento quanto seu contexto metodológico.
 
-Dessa forma, a persistência sustenta o acompanhamento das execuções e a análise posterior das escolhas realizadas. A estrutura adotada permite consultar a origem dos dados, recuperar a configuração aplicada e examinar as métricas resultantes, contribuindo para a transparência do processamento desenvolvido em colaboração com o laboratório de metabolômica.
+Dessa forma, a persistência sustenta o acompanhamento das execuções e a análise posterior das escolhas realizadas. A estrutura adotada permite consultar a origem dos dados, recuperar a configuração aplicada e examinar as métricas resultantes, contribuindo para a transparência do processamento desenvolvido em colaboração com o Laboratório de Metabolômica.
 
 
 \section{Implementação das funcionalidades}
@@ -573,7 +574,7 @@ A associação entre a matriz e a lista de amostras é realizada pelos identific
 
 A validação verifica a estrutura dos documentos e a compatibilidade das informações utilizadas no carregamento. Entre os aspectos considerados estão a identificação das amostras, a organização dos campos, a interpretação dos valores e a disponibilidade dos metadados exigidos pelo processamento.
 
-Os problemas encontrados são representados por registros que contêm código, severidade, mensagem e localização, quando disponível. As severidades distinguem erros, avisos e informações. Essa organização permite apresentar ao usuário a natureza do problema e o ponto do arquivo ao qual ele se refere.
+Os problemas encontrados são representados por registros que contêm código, severidade, mensagem e, quando disponível, localização; a interface de programação devolve os três primeiros. As severidades distinguem erros, avisos e informações. Essa organização permite apresentar ao usuário a natureza e a gravidade de cada problema.
 
 O procedimento reúne a lista de problemas identificados, em vez de interromper a avaliação na primeira ocorrência. Dessa forma, o usuário pode revisar as inconsistências em conjunto, reduzindo a necessidade de repetir a importação para descobrir problemas sucessivos.
 
@@ -600,7 +601,7 @@ A escolha do corretor considera três alternativas: manutenção do sinal sem co
 
 O apoio à escolha reúne sugestões baseadas no perfil da matriz e a comparação dos métodos disponíveis. O usuário pode examinar as informações do diagnóstico e solicitar a execução das alternativas para comparar seus resultados por critérios de avaliação. Esses elementos oferecem subsídios para a seleção do corretor pelo profissional.
 
-A interpretação desses elementos considera o procedimento utilizado para obtê-los. Uma sugestão baseada no diagnóstico não equivale à avaliação dos corretores sobre a matriz. A comparação dos resultados exige realizar os tratamentos e calcular os indicadores correspondentes.
+A interpretação desses elementos considera o procedimento utilizado para obtê-los. O palpite, medido numa amostra de 200 \textit{features}, não equivale à avaliação dos corretores sobre a matriz inteira. A comparação dos resultados exige realizar os tratamentos e calcular os indicadores correspondentes.
 
 O usuário seleciona o método e pode modificar a sugestão apresentada. A configuração aplicada e a origem do registro são preservadas, permitindo acompanhar a relação entre a informação fornecida pelo sistema e a escolha do profissional.
 
@@ -613,13 +614,13 @@ A correção do sinal busca reduzir a variação sistemática relacionada à aqu
 
 A implementação oferece os métodos \texttt{none}, \texttt{loess} e \texttt{serrf}. O primeiro mantém os valores sem aplicar um corretor, permitindo utilizar a matriz original como referência de comparação.
 
-O método LOESS utiliza regressão local sobre o sinal dos QCs em função da ordem de injeção, considerando os lotes definidos para o processamento. A curva ajustada representa a variação estimada ao longo da corrida e é utilizada na obtenção dos valores corrigidos.
+O método LOESS utiliza regressão local sobre o sinal dos QCs em função da ordem de injeção, considerando os lotes definidos para o processamento. A curva ajustada representa a variação estimada ao longo da corrida e é utilizada na obtenção dos valores corrigidos \cite{dunn2011procedures}.
 
 Esse procedimento pressupõe que a variação técnica possa ser representada por uma trajetória suficientemente suave. A quantidade e a distribuição dos QCs influenciam a capacidade de estimar essa trajetória, especialmente nas regiões em que há menor suporte de observações.
 
-O método SERRF utiliza florestas aleatórias para estimar o comportamento de cada variável a partir de informações de aquisição e do comportamento de outras variáveis. O ajuste utiliza os QCs como referência, e as previsões participam do cálculo do sinal corrigido.
+O método SERRF utiliza florestas aleatórias para estimar o comportamento de cada variável a partir de informações de aquisição e do comportamento de outras variáveis. O ajuste utiliza os QCs como referência, e as previsões participam do cálculo do sinal corrigido \cite{fan2019systematic}.
 
-A implementação em Python emprega os recursos de floresta aleatória do scikit-learn. Sua comparação com o código de referência em R considera que bibliotecas diferentes podem produzir ajustes diferentes mesmo quando o procedimento geral e os parâmetros são correspondentes. Por isso, a fidelidade das etapas e a qualidade da correção são avaliadas separadamente.
+A implementação em Python usa, por padrão, uma floresta que reproduz a amostragem do \textit{ranger}, do R, construída sobre as árvores de decisão do scikit-learn. Sua comparação com o código de referência em R considera que bibliotecas diferentes podem produzir ajustes diferentes mesmo quando o procedimento geral e os parâmetros são correspondentes. Por isso, a fidelidade das etapas e a qualidade da correção são avaliadas separadamente.
 
 Os corretores retornam a matriz resultante e informações sobre o tratamento realizado. Quando uma variável não pode ser corrigida, sua condição é acompanhada por uma causa registrada. Essa separação permite distinguir a aplicação efetiva do método das situações em que os valores foram preservados por impossibilidade de correção.
 
@@ -646,7 +647,7 @@ O tratamento de valores ausentes considera sua proporção dentro dos grupos exp
 
 Após a filtragem, a imputação preenche os valores ausentes conforme o método selecionado. Entre as alternativas implementadas estão procedimentos baseados em valores mínimos, média, mediana e vizinhos mais próximos. A escolha do método faz parte da especificação de processamento e permanece registrada.
 
-Os zeros e os valores ausentes exigem tratamento explícito, pois não representam necessariamente a mesma condição. A interpretação adotada pelo processamento deve considerar a representação do arquivo e o procedimento selecionado, evitando substituir automaticamente toda ocorrência de zero por um valor imputado.
+Os zeros exigem tratamento explícito. Neste domínio, o equipamento deixa a célula vazia ou com zero quando não detecta o sinal, e o caso dominante é o de concentração abaixo do limite de detecção. Por isso, o processamento trata o zero como valor ausente e o imputa pelo método selecionado.
 
 A normalização por amostra atua sobre diferenças globais entre as linhas da matriz. Entre as opções disponíveis estão normalização por soma, mediana, quantis e procedimentos baseados em quocientes. A aplicação depende da configuração escolhida e das condições exigidas pelo método.
 
@@ -692,11 +693,11 @@ As análises univariadas examinam diferenças entre grupos por variável. O sist
 
 A correção para múltiplos testes é aplicada para controlar a taxa de falsas descobertas. Os resultados ajustados são identificados como valores-q, mantendo a distinção em relação aos valores-p obtidos nos testes individuais.
 
-A análise discriminante por mínimos quadrados parciais, ou PLS-DA, é acompanhada de validação cruzada e teste de permutação. Esses procedimentos avaliam o comportamento preditivo e ajudam a evitar que a separação observada no ajuste seja interpretada, isoladamente, como evidência de capacidade de generalização.
+A análise discriminante por mínimos quadrados parciais, ou PLS-DA, é acompanhada de validação cruzada e teste de permutação. Esses procedimentos avaliam o comportamento preditivo e ajudam a evitar que a separação observada no ajuste seja interpretada, isoladamente, como evidência de capacidade de generalização \cite{westerhuis2008assessment}.
 
 Os gráficos do PLS-DA incluem projeções, cargas e importância das variáveis. Os indicadores de validação acompanham sua apresentação, permitindo interpretar a representação visual junto ao desempenho avaliado.
 
-O sistema também incorpora classificadores como Random Forest e SVM, além de PERMANOVA sobre a representação em componentes principais. Essas análises ampliam os recursos de avaliação, mas seus resultados permanecem dependentes do desenho do estudo e das condições de validação utilizadas.
+O sistema também incorpora classificadores como Random Forest \cite{breiman2001random} e SVM, além de PERMANOVA sobre a representação em componentes principais. Essas análises ampliam os recursos de avaliação, mas seus resultados permanecem dependentes do desenho do estudo e das condições de validação utilizadas.
 
 Os gráficos de qualidade incluem representações das distribuições, comparações entre estados do processamento e medidas de variação por variável ou grupo. Sua finalidade é permitir a inspeção de padrões que uma tabela de indicadores agregados pode ocultar.
 
@@ -713,7 +714,7 @@ A matriz corrigida contém o resultado da aplicação do corretor, enquanto a ma
 
 A exportação para o MetaboAnalyst organiza os dados no formato previsto pelo fluxo de interoperabilidade. O aplicativo prepara o arquivo, e seu envio à plataforma é realizado pelo usuário. A exportação não corresponde a uma transferência automática da matriz para um serviço externo.
 
-O procedimento adota um limite de 5.000 variáveis para o arquivo destinado ao MetaboAnalyst. Quando o conjunto excede esse limite, a seleção utiliza ordenação fundamentada no RSD dos QCs, preservando o critério utilizado para reduzir a matriz.
+O procedimento adota, por padrão, um limite de 5.000 variáveis para o arquivo destinado ao MetaboAnalyst, ajustável de 1 a 100.000. Quando o conjunto excede esse limite, a seleção utiliza ordenação fundamentada no RSD dos QCs, preservando o critério utilizado para reduzir a matriz.
 
 As variáveis removidas e o motivo do corte devem permanecer identificáveis no registro da exportação. Dessa forma, a redução não é realizada como uma alteração manual sem procedência, e o profissional pode verificar quais sinais foram excluídos para atender ao formato de destino.
 
@@ -756,7 +757,23 @@ A distribuição é realizada em uma pasta que contém o executável e suas depe
 \subsection{Organização das telas e fluxo de utilização}
 \label{subsec:organizacao-telas-fluxo}
 
-A interface é organizada em abas que agrupam as operações conforme sua finalidade. O fluxo principal compreende a preparação do estudo, a configuração e a execução do tratamento, a avaliação da qualidade e a inspeção dos gráficos. Uma área fixa de trabalhos em curso permite acompanhar as operações iniciadas durante a utilização do aplicativo.
+A interface é organizada em abas que agrupam as operações conforme sua finalidade. O fluxo principal compreende a preparação do estudo, a configuração e a execução do tratamento, a avaliação da qualidade e a inspeção dos gráficos. Uma área fixa de trabalhos em curso permite acompanhar as operações iniciadas durante a utilização do aplicativo. Além dessas, duas abas trazem funcionalidades em versão beta, fora do escopo deste trabalho, a análise de multiverso e as vias metabólicas, e a última, ``O que este aplicativo NÃO faz'', descreve os limites da ferramenta, num total de sete abas.
+
+A Figura~\ref{fig:4-aba-qualidade} mostra a aba ``Qualidade do resultado'', com cada métrica acompanhada da população em que foi medida, e a Figura~\ref{fig:4-aba-graficos}, a aba ``Gráficos'', com a trajetória dos QCs ao longo da corrida. As duas foram capturadas com os arquivos de um dos modos do estudo do laboratório, depois de uma execução sem correção.
+
+\begin{figure}[htbp]
+\centering
+\caption{Aba ``Qualidade do resultado'' do aplicativo}\label{fig:4-aba-qualidade}
+\includegraphics[width=\linewidth]{figs/cap4-aba-qualidade.png}
+\fonte{Elaborado pelos autores, com o aplicativo, em 10/11/2026.}
+\end{figure}
+
+\begin{figure}[htbp]
+\centering
+\caption{Aba ``Gráficos'' do aplicativo, com a trajetória dos QCs ao longo da corrida}\label{fig:4-aba-graficos}
+\includegraphics[width=\linewidth]{figs/cap4-aba-graficos.png}
+\fonte{Elaborado pelos autores, com o aplicativo, em 10/11/2026.}
+\end{figure}
 
 A aba \textit{Preparar o estudo} concentra a seleção dos arquivos de entrada e a verificação das informações necessárias ao processamento. Nesse ponto, o usuário informa a matriz de medições e a lista de amostras correspondentes. A aplicação utiliza essas entradas para associar os valores medidos aos metadados, incluindo a ordem de injeção.
 
@@ -764,7 +781,7 @@ Após a seleção, o usuário pode solicitar a validação dos arquivos. Os prob
 
 O diagnóstico acrescenta informações sobre o comportamento da matriz e dos controles de qualidade. Seus resultados auxiliam a escolha do método de correção e a avaliação de possíveis fronteiras de lote. As sugestões produzidas pelo sistema permanecem sujeitas à revisão do profissional.
 
-A aba \textit{Corrigir e levar o resultado} reúne os controles de configuração e execução do processamento. O usuário pode selecionar o corretor e definir as operações posteriores, como filtragem, tratamento de valores ausentes, normalização, transformação e escalonamento. Também pode utilizar os recursos de apoio à escolha do método, considerando a distinção entre uma estimativa e uma comparação obtida pela execução das alternativas.
+A aba \textit{Corrigir e levar o resultado} reúne os controles de configuração e execução do processamento. O usuário pode selecionar o corretor e definir as operações posteriores, como filtragem, tratamento de valores ausentes, normalização, transformação e escalonamento. Por padrão, a caixa ``Automático'' vem marcada e aplica o corretor do palpite, medido em 200 \textit{features}; o usuário pode desmarcá-la, comparar os métodos pela medição completa e escolher o corretor.
 
 A configuração aplicada integra o registro da execução. A organização dos controles permite relacionar o resultado aos parâmetros escolhidos, evitando que o processamento seja apresentado como uma operação única cujas decisões internas não possam ser identificadas.
 
@@ -801,7 +818,7 @@ As mensagens evitam tratar toda ocorrência como uma falha equivalente. Uma entr
 
 As sugestões do sistema são acompanhadas de justificativas, permitindo que o usuário examine a base da escolha antes de aceitá-la ou modificá-la. A possibilidade de sobrescrita mantém o controle metodológico com o profissional e permite registrar sua participação no processo.
 
-A interface distingue a estimativa de corretor da medição realizada pela execução das alternativas. Essa separação permite distinguir uma sugestão baseada no diagnóstico dos resultados efetivamente medidos sobre a matriz atual.
+A interface distingue o palpite, medido numa amostra de 200 \textit{features}, da medição completa, que aplica os corretores a todas as \textit{features}. Essa separação permite distinguir a sugestão dos resultados medidos sobre a matriz inteira.
 
 As métricas são apresentadas com informações que contextualizam seu significado. A identificação do estimador, da população considerada e do ponto de processamento permite reconhecer o que foi medido. Essa contextualização é necessária porque indicadores com o mesmo nome podem assumir interpretações diferentes conforme o procedimento utilizado.
 
@@ -864,7 +881,3 @@ O endereço do repositório do projeto é apresentado a seguir:
 \begin{quote}
     \textbf{Repositório do código-fonte:} \url{github.com/NishiyaKN/refino-quimiometrico}
 \end{quote}
-
-\section{Síntese do desenvolvimento}
-
-O desenvolvimento do MetaRefino integrou, em uma aplicação para Windows, as etapas de importação e validação dos arquivos, diagnóstico das matrizes, seleção do corretor pelo profissional e execução da correção, pré-processamento, análise estatística e exportação dos resultados. A persistência dos dados e dos registros de execução permite relacionar os artefatos gerados às entradas, às configurações e às decisões metodológicas adotadas, enquanto a interface gráfica reúne essas operações em um fluxo de apoio à decisão, configurado e acompanhado pelo usuário. O empacotamento com as dependências necessárias e o controle de versão do código-fonte complementam a organização da aplicação e sua distribuição. Assim, a implementação estabelece a base para avaliar o funcionamento do sistema e os resultados do tratamento das matrizes, conforme os procedimentos e as evidências apresentados no capítulo seguinte.
