@@ -26,9 +26,9 @@ As informações obtidas foram complementadas pela análise das matrizes de medi
 
 Entre as necessidades registradas encontra-se a preparação manual de matrizes em planilha para continuidade da análise em outras ferramentas. O relato estabelece a ocorrência desse procedimento, mas não permite afirmar sua frequência nem a inexistência de critérios informais. A resposta do projeto foi tornar explícitos os critérios aplicados pelo software e registrar as variáveis removidas na exportação, permitindo distinguir uma seleção executada pelo aplicativo de uma alteração sem registro do procedimento.
 
-O refinamento dos requisitos acompanhou a implementação. A especificação foi decomposta em fases, com critérios de aceitação, e complementada por decisões técnicas e registros de divergências em relação ao processamento de referência. Posteriormente, os roteiros de teste do grupo relacionaram requisitos a cenários de utilização. Como as funcionalidades e a interface evoluíram após esses roteiros, a rastreabilidade precisa considerar a versão em que cada verificação foi realizada.
+O refinamento dos requisitos acompanhou a implementação. A especificação foi decomposta em fases, com critérios de aceitação, e complementada por registro de decisões técnicas de divergências em relação ao processamento de referência. Posteriormente, os roteiros de teste do grupo relacionaram requisitos a cenários de utilização. Como as funcionalidades e a interface evoluíram após esses roteiros, a rastreabilidade precisa considerar a versão em que cada verificação foi realizada.
 
-A formalização utilizou documentos com finalidades distintas. O documento de implementação reúne os contratos e os critérios de aceitação; o registro de decisões conserva as alterações e suas justificativas; o registro de divergências identifica diferenças em relação ao procedimento em R; e o registro de problemas de implementação conserva as situações que motivaram verificações adicionais. Essa organização permite acompanhar a evolução da solução sem interpretar uma descrição histórica como requisito vigente. Em particular, os primeiros desenhos de interface e os requisitos de funcionalidades posteriormente excluídas precisam ser lidos à luz das decisões de escopo.
+A especificação reuniu os contratos e os critérios de aceitação de cada fase, e as alterações, com suas justificativas, e as diferenças em relação ao procedimento em R foram registradas ao longo do desenvolvimento. Essa organização permite acompanhar a evolução da solução sem interpretar uma descrição histórica como requisito vigente. Em particular, os primeiros desenhos de interface e os requisitos de funcionalidades posteriormente excluídas precisam ser lidos à luz das decisões de escopo.
 
 Os arquivos analisados abrangem modos de aquisição que combinam polaridade positiva ou negativa com separação C18 ou HILIC. A especificação explicita essas condições, mas as observações obtidas nos conjuntos de referência não são tratadas como propriedades de qualquer estudo futuro. Quantidade de amostras, número de QCs e distribuição dos grupos são características da entrada e devem ser verificadas a cada carregamento.
 
@@ -130,7 +130,7 @@ No processamento por etapas, essa relação é complementada pelos arquivos \tex
 
 O desenvolvimento também utiliza testes negativos, nos quais uma condição inválida deve provocar uma recusa ou uma reprovação. Essa prática permite verificar se o mecanismo detecta o defeito que pretende impedir. Quando há comparação com o processamento em R, a referência, os dados, a semente, a tolerância e o ambiente compõem o contexto da evidência. Por isso, critérios pendentes, testes pulados por ausência de dados e divergências conhecidas não são classificados automaticamente como funcionalidades validadas.
 
-A rastreabilidade inclui, ainda, o vínculo entre o artefato verificado e a versão em que o resultado foi obtido. O capítulo de testes registra casos sobre o executável de setembro e medições posteriores no ambiente de desenvolvimento, além da versão publicada em outubro. A descrição de um cenário aprovado em uma dessas condições não é estendida automaticamente às demais. Para funcionalidades acrescentadas depois do plano, a evidência disponível deve ser identificada pelo teste automatizado, pelo relatório de medição ou pela verificação específica correspondente.
+A rastreabilidade inclui, ainda, o vínculo entre o artefato verificado e a versão em que o resultado foi obtido. O capítulo de testes registra casos sobre o executável de setembro e medições posteriores no ambiente de desenvolvimento, além da versão de outubro. A descrição de um cenário aprovado em uma dessas condições não é estendida automaticamente às demais. Para funcionalidades acrescentadas depois do plano, a evidência disponível deve ser identificada pelo teste automatizado, pelo relatório de medição ou pela verificação específica correspondente.
 
 \section{Planejamento e organização do projeto}
 
@@ -278,27 +278,27 @@ A existência de uma API interna não transforma o produto em um sistema web imp
 
 O fluxo arquitetural pode ser resumido como interface gráfica, cliente HTTP, API interna, coordenação do processamento e módulos científicos. A persistência e os escritores de arquivos são acionados nos pontos que necessitam de armazenamento ou geração de artefatos. A linha de comando reutiliza componentes de cálculo e serialização, sem exigir que toda operação percorra a janela ou a API.
 
-A Figura~\ref{fig:4-arquitetura-local} sintetiza o caminho principal de comunicação. Os módulos científicos são invocados pela coordenação das operações, e não pelos controles visuais diretamente. O banco conserva o contexto persistido, enquanto os escritores produzem os arquivos científicos; o conteúdo numérico integral das matrizes não é representado como uma coleção de células no banco relacional.
+A Figura~\ref{fig:4-arquitetura-local} sintetiza o caminho principal de comunicação. O processamento é invocado pela coordenação das operações, e não pelos controles visuais diretamente; a interface desenha as figuras a partir dos resultados que a API devolve. O banco conserva o contexto persistido, enquanto os escritores produzem os arquivos científicos; o conteúdo numérico integral das matrizes não é representado como uma coleção de células no banco relacional.
 
 \begin{figure}[htbp]
 \centering
 \caption{Organização do fluxo principal da aplicação local.}
 \label{fig:4-arquitetura-local}
 \begin{tabular}{c}
-\fbox{Interface Windows: Qt/PySide6} \\
+\fbox{Interface Windows: Qt/PySide6, com as figuras desenhadas em Matplotlib} \\
 $\updownarrow$ \\
 \fbox{Cliente HTTP e contratos de comunicação} \\
 $\updownarrow$ \\
-\fbox{API interna: FastAPI/Uvicorn em 127.0.0.1} \\
+\fbox{API interna: FastAPI/Uvicorn em 127.0.0.1, no mesmo processo da interface} \\
 $\downarrow$ \\
 \fbox{Coordenação de trabalhos e especificação do processamento} \\
 $\downarrow$ \\
-\fbox{Validação, diagnóstico, correção e pré-processamento} \\
+\fbox{Validação, diagnóstico, sugestão do corretor, correção e pré-processamento} \\
 $\downarrow$ \\
-\fbox{Estatística, métricas e apresentação dos resultados} \\
+\fbox{Estatística e métricas de qualidade} \\
 \end{tabular}
 \par\smallskip
-{\footnotesize Serviços de apoio à coordenação: repositórios SQLAlchemy/SQLite, migrações Alembic e escritores dos arquivos de saída.}
+{\footnotesize Os resultados voltam à interface pela API, e as figuras são desenhadas na interface a partir deles. Serviços de apoio à coordenação: repositórios SQLAlchemy/SQLite, migrações Alembic e escritores dos arquivos de saída.}
 \par\smallskip{\footnotesize Fonte: elaboração dos autores a partir dos componentes da aplicação.}
 \end{figure}
 
@@ -458,7 +458,7 @@ Na tabela \texttt{decisions}, não existe uma restrição de unicidade para a co
 
 O esquema declara exclusão em cascata em relacionamentos de dependência. Entre eles estão os vínculos entre estudo e matriz, matriz e amostra, e execução e relatório de qualidade. Essa política expressa que determinados registros dependentes devem ser removidos quando a entidade principal correspondente é excluída.
 
-No SQLite utilizado pelo aplicativo, a configuração de conexão não habilita a aplicação automática das chaves estrangeiras. Consequentemente, a declaração de exclusão em cascata não é suficiente para executar a remoção dos registros dependentes. Por isso, a única remoção que o aplicativo faz, a poda do histórico de execuções do multiverso, apaga explicitamente os registros dependentes antes dos principais, respeitando a ordem das dependências.
+No SQLite utilizado pelo aplicativo, a configuração de conexão não habilita a aplicação automática das chaves estrangeiras. Consequentemente, a declaração de exclusão em cascata não é suficiente para executar a remoção dos registros dependentes. Por isso, a única remoção que o aplicativo faz, a poda do histórico de execuções do teste de robustez, apaga explicitamente os registros dependentes antes dos principais, respeitando a ordem das dependências.
 
 Essa característica delimita a responsabilidade dos mecanismos de integridade. Os relacionamentos permanecem definidos no esquema, mas sua aplicação automática depende da configuração do banco. No ambiente utilizado pelo produto, os procedimentos de escrita e exclusão precisam preservar a consistência dos vínculos.
 
@@ -474,7 +474,7 @@ As migrações são gerenciadas com Alembic e organizadas em uma cadeia linear d
 
 Entre as alterações realizadas estão a inclusão dos campos destinados a registrar a apresentação da proposta e a sobrescrita de parâmetros nas decisões. Essas mudanças ampliaram a capacidade de representar a intervenção do profissional, preservando informações que não eram expressas apenas pela configuração final.
 
-As migrações também permitem corrigir a nomenclatura de atributos quando ela não corresponde à quantidade armazenada. A distinção entre valor-p e valor-q, por exemplo, levou a renomear uma coluna das tabelas do multiverso, para que o nome representasse o ajuste para múltiplos testes. A evolução do esquema envolve, portanto, tanto mudanças estruturais quanto adequações semânticas.
+As migrações também permitem corrigir a nomenclatura de atributos quando ela não corresponde à quantidade armazenada. A distinção entre valor-p e valor-q, por exemplo, levou a renomear uma coluna das tabelas do teste de robustez, para que o nome representasse o ajuste para múltiplos testes. A evolução do esquema envolve, portanto, tanto mudanças estruturais quanto adequações semânticas.
 
 As operações de alteração de tabelas precisam considerar as limitações do SQLite. Quando uma mudança não pode ser aplicada diretamente, utiliza-se um procedimento de cópia e substituição: a estrutura atualizada é criada, os dados compatíveis são transferidos e a tabela anterior é substituída. Esse mecanismo permite realizar alterações preservando os registros abrangidos pela migração.
 
@@ -757,7 +757,7 @@ A distribuição é realizada em uma pasta que contém o executável e suas depe
 \subsection{Organização das telas e fluxo de utilização}
 \label{subsec:organizacao-telas-fluxo}
 
-A interface é organizada em abas que agrupam as operações conforme sua finalidade. O fluxo principal compreende a preparação do estudo, a configuração e a execução do tratamento, a avaliação da qualidade e a inspeção dos gráficos. Uma área fixa de trabalhos em curso permite acompanhar as operações iniciadas durante a utilização do aplicativo. Além dessas, duas abas trazem funcionalidades em versão beta, fora do escopo deste trabalho, a análise de multiverso e as vias metabólicas, e a última, ``O que este aplicativo NÃO faz'', descreve os limites da ferramenta, num total de sete abas.
+A interface é organizada em abas dispostas em uma barra lateral que agrupam as operações conforme sua finalidade. O fluxo principal compreende a preparação do estudo, a correção de sinal, a normalização e a análise estatística dos dados, além da avaliação da qualidade dos resultados e a inspeção dos gráficos. Uma área fixa de trabalhos em curso permite acompanhar as operações iniciadas durante a utilização do aplicativo. Além dessas, duas abas trazem funcionalidades em versão beta, fora do escopo deste trabalho, a análise de robustez e a identificação de vias metabólicas, e a última, ``O que este aplicativo NÃO faz'', descreve os limites da ferramenta, num total de nove abas.
 
 A Figura~\ref{fig:4-aba-qualidade} mostra a aba ``Qualidade do resultado'', com cada métrica acompanhada da população em que foi medida, e a Figura~\ref{fig:4-aba-graficos}, a aba ``Gráficos'', com a trajetória dos QCs ao longo da corrida. As duas foram capturadas com os arquivos de um dos modos do estudo do laboratório, depois de uma execução sem correção.
 
