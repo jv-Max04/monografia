@@ -757,41 +757,57 @@ A distribuição é realizada em uma pasta que contém o executável e suas depe
 \subsection{Organização das telas e fluxo de utilização}
 \label{subsec:organizacao-telas-fluxo}
 
-A interface é organizada em abas dispostas em uma barra lateral que agrupam as operações conforme sua finalidade. O fluxo principal compreende a preparação do estudo, a correção de sinal, a normalização e a análise estatística dos dados, além da avaliação da qualidade dos resultados e a inspeção dos gráficos. Uma área fixa de trabalhos em curso permite acompanhar as operações iniciadas durante a utilização do aplicativo. Além dessas, duas abas trazem funcionalidades em versão beta, fora do escopo deste trabalho, a análise de robustez e a identificação de vias metabólicas, e a última, ``O que este aplicativo NÃO faz'', descreve os limites da ferramenta, num total de nove abas.
+A interface é organizada em áreas acessíveis por um menu lateral. O fluxo principal compreende \textit{Preparar o estudo}, \textit{Correção}, \textit{Normalização}, \textit{Análise estatística}, \textit{Qualidade do resultado} e \textit{Gráficos}. A área \textit{Métodos e limites} reúne orientações metodológicas. Os recursos experimentais permanecem recolhidos em \textit{Trabalhos futuros}, separados do percurso principal, e não integram o escopo avaliado neste trabalho.
 
-A Figura~\ref{fig:4-aba-qualidade} mostra a aba ``Qualidade do resultado'', com cada métrica acompanhada da população em que foi medida, e a Figura~\ref{fig:4-aba-graficos}, a aba ``Gráficos'', com a trajetória dos QCs ao longo da corrida. As duas foram capturadas com os arquivos de um dos modos do estudo do laboratório, depois de uma execução sem correção.
+As Figuras~\ref{fig:4-preparar-estudo} a~\ref{fig:4-aba-graficos} apresentam a interface da versão Windows de 19/11/2026, identificada como \texttt{windows-\allowbreak{}2026.\allowbreak{}11.\allowbreak{}19.\allowbreak{}1}. As capturas utilizam os arquivos \texttt{measurements\_\allowbreak{}neg\_\allowbreak{}c18.csv} e \texttt{Sample\_\allowbreak{}List\_\allowbreak{}neg\_\allowbreak{}c18.csv}, fornecidos pelo grupo: a matriz de entrada contém 2.184 variáveis e 68 amostras, das quais sete são QCs. As imagens documentam a utilização dessa versão e não substituem os ensaios e a avaliação do laboratório descritos no capítulo de testes.
+
+A área \textit{Preparar o estudo} concentra a seleção dos arquivos e a verificação das informações necessárias ao processamento. A matriz de medições é associada à lista de amostras, que fornece os metadados, incluindo a ordem de injeção. A Figura~\ref{fig:4-preparar-estudo} mostra as duas entradas carregadas e o resumo da validação. Nessa captura, os arquivos foram aceitos com 17 avisos, condição que exige a leitura das ocorrências antes de prosseguir.
 
 \begin{figure}[htbp]
 \centering
-\caption{Aba ``Qualidade do resultado'' do aplicativo}\label{fig:4-aba-qualidade}
+\caption{Preparação do estudo: seleção dos arquivos e resumo da validação}\label{fig:4-preparar-estudo}
+\includegraphics[width=\linewidth]{figs/cap4-preparar-estudo.png}
+\fonte{Elaborado pelos autores, com o aplicativo Windows, em 19/11/2026.}
+\end{figure}
+
+Os problemas identificados na validação são apresentados antes da execução do tratamento, permitindo revisar as inconsistências e corrigir as entradas. O diagnóstico acrescenta informações sobre o comportamento da matriz e dos controles de qualidade, auxiliando a avaliação de possíveis fronteiras de lote. O palpite constitui uma operação distinta, solicitada pelo usuário, para comparar os corretores em uma amostra de 200 \textit{features}; ele não foi executado nas capturas apresentadas. As informações oferecidas pela ferramenta permanecem sujeitas à interpretação do profissional.
+
+A área \textit{Correção} reúne a escolha do corretor, a declaração dos lotes, a variante do RSD dos QCs e a opção de utilizar vários núcleos de processamento. A Figura~\ref{fig:4-configuracao-correcao} ilustra a seleção manual do SERRF e de dois lotes, com quatro e três QCs, respectivamente. O botão ``Seguir sugestões do app'' permite preencher os controles com as sugestões disponíveis, sem retirar a possibilidade de revisão dos parâmetros. A comparação completa entre os corretores é uma operação própria, acionada pelo botão ``Medir qual corretor vence (minutos)'', e não deve ser confundida com a aplicação de um método escolhido pelo usuário.
+
+\begin{figure}[htbp]
+\centering
+\caption{Configuração da correção: seleção manual do SERRF e declaração de dois lotes}\label{fig:4-configuracao-correcao}
+\includegraphics[width=\linewidth]{figs/cap4-configuracao-correcao.png}
+\fonte{Elaborado pelos autores, com o aplicativo Windows, em 19/11/2026.}
+\end{figure}
+
+Ao abrir a área de correção, os valores iniciais são sem correção, um lote e RSD calculado com todos os QCs. A sugestão disponível é exibida ao lado do botão \textit{Seguir sugestões do app}, e sua justificativa pode ser consultada pelo botão ``?''. A seleção manual apresentada na figura corresponde a uma configuração posterior desses controles.
+
+O painel produzido após a conclusão desse cenário com SERRF é apresentado na Figura~\ref{fig:5-1}. Já a área \textit{Normalização} concentra as opções de filtragem, imputação de valores ausentes, normalização por amostra, transformação e escalonamento. A seleção da matriz de entrada permite aplicar essas operações à matriz original ou à saída da correção, conforme a disponibilidade e a validade de cada resultado.
+
+Na normalização, o botão \textit{Seguir sugestões do app} devolve os campos aos valores iniciais, que constituem pontos de partida, sem representar uma escolha medida para a matriz. As matrizes corrigida e normalizada podem ser salvas nas respectivas áreas, tanto no formato do laboratório, com as \textit{features} nas linhas, quanto no formato do MetaboAnalyst.
+
+Na área \textit{Análise estatística}, o usuário identifica o estudo, define os grupos de comparação e seleciona as análises desejadas. Correção, normalização e análise possuem comandos de execução e estados próprios. Uma alteração de parâmetros pode tornar uma saída desatualizada; nessa situação, o aplicativo orienta a refazer a etapa correspondente. A configuração aplicada permanece associada ao resultado, permitindo relacionar as medidas apresentadas aos procedimentos utilizados.
+
+A área \textit{Qualidade do resultado} reúne os indicadores utilizados na avaliação do tratamento. A Figura~\ref{fig:4-aba-qualidade} mostra as medidas de dispersão dos QCs de uma execução sem correção, com imputação por um quinto do menor valor positivo, sem normalização por amostra, transformação logarítmica na base 10 e escalonamento Pareto. O cenário é distinto da configuração SERRF ilustrada anteriormente. As medidas informam a população utilizada; nessa execução, 2.158 variáveis possuem RSD definido na matriz avaliada. As medidas fora da amostra identificadas como indisponíveis permanecem explicitamente indicadas dessa forma.
+
+\begin{figure}[htbp]
+\centering
+\caption{Qualidade do resultado: medidas de dispersão dos QCs no cenário sem correção}\label{fig:4-aba-qualidade}
 \includegraphics[width=\linewidth]{figs/cap4-aba-qualidade.png}
-\fonte{Elaborado pelos autores, com o aplicativo, em 10/11/2026.}
+\fonte{Elaborado pelos autores, com o aplicativo Windows, em 19/11/2026.}
 \end{figure}
+
+A área \textit{Gráficos} disponibiliza as representações dos dados e dos resultados, com seleção da figura, dimensões e resolução para exportação. A Figura~\ref{fig:4-aba-graficos} apresenta a trajetória do primeiro componente principal dos sete QCs ao longo da corrida, calculada sobre as 2.184 variáveis da matriz ingerida, antes de qualquer correção. As séries distinguem os lotes identificados no diagnóstico; as linhas ligam QCs consecutivos do mesmo lote e não representam uma tendência ajustada. O gráfico permite examinar o comportamento do sinal sem atribuir à visualização um teste estatístico que ela não realiza.
 
 \begin{figure}[htbp]
 \centering
-\caption{Aba ``Gráficos'' do aplicativo, com a trajetória dos QCs ao longo da corrida}\label{fig:4-aba-graficos}
+\caption{Gráficos: trajetória do primeiro componente principal dos QCs na matriz de entrada}\label{fig:4-aba-graficos}
 \includegraphics[width=\linewidth]{figs/cap4-aba-graficos.png}
-\fonte{Elaborado pelos autores, com o aplicativo, em 10/11/2026.}
+\fonte{Elaborado pelos autores, com o aplicativo Windows, em 19/11/2026.}
 \end{figure}
 
-A aba \textit{Preparar o estudo} concentra a seleção dos arquivos de entrada e a verificação das informações necessárias ao processamento. Nesse ponto, o usuário informa a matriz de medições e a lista de amostras correspondentes. A aplicação utiliza essas entradas para associar os valores medidos aos metadados, incluindo a ordem de injeção.
-
-Após a seleção, o usuário pode solicitar a validação dos arquivos. Os problemas identificados são apresentados antes da execução do tratamento, permitindo revisar as inconsistências e corrigir as entradas. Essa posição da validação no fluxo evita que falhas estruturais sejam percebidas apenas durante operações de maior duração.
-
-O diagnóstico acrescenta informações sobre o comportamento da matriz e dos controles de qualidade. Seus resultados auxiliam a escolha do método de correção e a avaliação de possíveis fronteiras de lote. As sugestões produzidas pelo sistema permanecem sujeitas à revisão do profissional.
-
-A aba \textit{Correção} reúne a escolha do corretor, o número de lotes e a variante do RSD dos QCs. Ela abre com os valores padrão: sem correção, com um lote e com o RSD calculado com todos os QCs. O botão \textit{Seguir sugestões do app} preenche o corretor indicado pelo palpite, medido em 200 \textit{features}, e o número de lotes proposto pelo diagnóstico; a sugestão aparece ao lado do botão, e a justificativa é aberta pelo botão ``?'' ao lado dela. O usuário pode também escolher o corretor e os lotes manualmente e comparar os métodos pela medição completa.
-
-A aba \textit{Normalização} reúne as operações posteriores à correção: filtragem por RSD e por valores ausentes, imputação, normalização por amostra, transformação e escalonamento. Nela, o mesmo botão apenas devolve os campos aos valores iniciais, que são pontos de partida e não uma escolha medida para a matriz. A aba \textit{Análise estatística} executa as análises sobre a matriz escolhida como entrada. O resultado da correção e o da normalização podem ser salvos na própria aba, no formato do laboratório, com as \textit{features} nas linhas, ou no do MetaboAnalyst.
-
-A configuração aplicada integra o registro da execução. A organização dos controles permite relacionar o resultado aos parâmetros escolhidos, evitando que o processamento seja apresentado como uma operação única cujas decisões internas não possam ser identificadas.
-
-A aba \textit{Qualidade do resultado} apresenta os indicadores utilizados na avaliação do tratamento. As informações são agrupadas por tema, permitindo examinar diferentes aspectos da matriz sem reduzir a qualidade a uma única medida. A apresentação considera o ponto do processamento e as condições em que cada indicador foi calculado.
-
-A aba \textit{Gráficos} disponibiliza as representações visuais dos dados e das análises. O usuário seleciona a figura de interesse e examina aspectos como distribuição dos valores, dispersão dos controles de qualidade, estrutura multivariada e diferenças entre grupos. As figuras também podem ser exportadas para utilização em relatórios e apresentações.
-
-A aba \textit{Métodos e limites} explicita os limites das funcionalidades e reúne as referências dos métodos usados no processamento. Essa informação integra o fluxo de utilização porque o tratamento computacional de uma matriz não equivale à identificação de compostos, à confirmação de significado biológico ou à validação clínica dos resultados.
+A área \textit{Métodos e limites} explicita as condições de interpretação, os limites das funcionalidades e as referências dos métodos utilizados no processamento. O tratamento computacional de uma matriz não equivale à identificação de compostos, à confirmação de significado biológico ou à validação clínica dos resultados.
 
 A área \textit{Trabalhos em curso} permanece disponível durante a navegação. Ela permite consultar o estado das operações e solicitar o cancelamento dos trabalhos que não precisam continuar. Dessa forma, o acompanhamento não fica restrito à aba em que a execução foi iniciada.
 
