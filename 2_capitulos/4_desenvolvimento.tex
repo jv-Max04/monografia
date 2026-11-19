@@ -26,7 +26,7 @@ As informações obtidas foram complementadas pela análise das matrizes de medi
 
 Entre as necessidades registradas encontra-se a preparação manual de matrizes em planilha para continuidade da análise em outras ferramentas. O relato estabelece a ocorrência desse procedimento, mas não permite afirmar sua frequência nem a inexistência de critérios informais. A resposta do projeto foi tornar explícitos os critérios aplicados pelo software e registrar as variáveis removidas na exportação, permitindo distinguir uma seleção executada pelo aplicativo de uma alteração sem registro do procedimento.
 
-O refinamento dos requisitos acompanhou a implementação. A especificação foi decomposta em fases, com critérios de aceitação, e complementada por registro de decisões técnicas de divergências em relação ao processamento de referência. Posteriormente, os roteiros de teste do grupo relacionaram requisitos a cenários de utilização. Como as funcionalidades e a interface evoluíram após esses roteiros, a rastreabilidade precisa considerar a versão em que cada verificação foi realizada.
+O refinamento dos requisitos acompanhou a implementação. A especificação foi decomposta em fases, com critérios de aceitação, e complementada por registro de decisões técnicas e de divergências em relação ao processamento de referência. Posteriormente, os roteiros de teste do grupo relacionaram requisitos a cenários de utilização. Como as funcionalidades e a interface evoluíram após esses roteiros, a rastreabilidade precisa considerar a versão em que cada verificação foi realizada.
 
 A especificação reuniu os contratos e os critérios de aceitação de cada fase, e as alterações, com suas justificativas, e as diferenças em relação ao procedimento em R foram registradas ao longo do desenvolvimento. Essa organização permite acompanhar a evolução da solução sem interpretar uma descrição histórica como requisito vigente. Em particular, os primeiros desenhos de interface e os requisitos de funcionalidades posteriormente excluídas precisam ser lidos à luz das decisões de escopo.
 
@@ -42,8 +42,8 @@ Os principais casos de uso do fluxo entregue são os seguintes:
 \begin{enumerate}
 \item \textbf{Preparar e validar o estudo:} selecionar o par de arquivos e o modo de aquisição, verificar sua estrutura e examinar os erros e avisos encontrados.
 \item \textbf{Diagnosticar os dados:} consultar indicadores de qualidade, indícios de variação técnica e propostas de organização dos lotes.
-\item \textbf{Definir a correção:} aceitar o corretor que o palpite propõe, aplicado por padrão pela caixa ``Automático'', ou desmarcá-la, comparar os métodos disponíveis e selecionar o corretor que será aplicado.
-\item \textbf{Executar o tratamento:} configurar e realizar a correção e o pré-processamento, pelo fluxo completo ou por etapas, com acompanhamento do trabalho.
+\item \textbf{Definir a correção:} seguir as sugestões do aplicativo, que preenchem o corretor medido pelo palpite e o número de lotes proposto pelo diagnóstico, ou comparar os métodos disponíveis e escolher o corretor e os lotes.
+\item \textbf{Executar o tratamento:} configurar e executar a correção, a normalização e a análise estatística, cada etapa sobre a matriz escolhida como entrada, processada ou não, com acompanhamento do trabalho.
 \item \textbf{Avaliar os resultados:} consultar as métricas e as figuras correspondentes à matriz e ao estágio de processamento considerado.
 \item \textbf{Obter os artefatos:} gerar e salvar as matrizes corrigida e processada e exportar a entrada compatível com o MetaboAnalyst.
 \item \textbf{Interromper uma execução:} solicitar o cancelamento e acompanhar a transição do trabalho para seu estado terminal.
@@ -63,7 +63,7 @@ Os identificadores abaixo acompanham o levantamento relacionado ao plano de test
 \item[RF-01 --- Seleção da entrada.] Permitir selecionar os arquivos de medições e de descrição das amostras e informar o modo de aquisição, distinguindo a finalidade de cada arquivo.
 \item[RF-02 --- Validação.] Verificar a estrutura e a coerência da entrada, apresentar erros e avisos e impedir a continuidade quando houver condição incompatível com o processamento solicitado.
 \item[RF-03 --- Diagnóstico.] Produzir um perfil dos dados e apresentar o diagnóstico e as propostas de fronteiras de lote, preservando a distinção entre indicação computacional e confirmação pelo pesquisador.
-\item[RF-04 --- Apoio à escolha.] Propor o corretor por uma medição sobre a própria matriz e, por padrão, aplicá-lo pela caixa ``Automático''; permitir que o pesquisador a desmarque, compare os métodos de correção por meio de sua execução e da apresentação dos indicadores de qualidade e escolha o método a aplicar, identificando o critério empregado.
+\item[RF-04 --- Apoio à escolha.] Propor o corretor por uma medição sobre a própria matriz e o número de lotes pelo diagnóstico, e aplicá-los quando o pesquisador escolher seguir as sugestões; permitir que ele compare os métodos de correção por meio de sua execução e da apresentação dos indicadores de qualidade e escolha o método a aplicar, identificando o critério empregado.
 \item[RF-05 --- Correção.] Disponibilizar as opções \texttt{none}, \texttt{serrf} e \texttt{loess}. A primeira mantém o sinal sem correção e permite estabelecer uma condição de comparação.
 \item[RF-06 --- Grupos experimentais.] Receber e validar o par de grupos utilizado nas análises que exigem essa definição, recusando referências a grupos inexistentes.
 \item[RF-07 --- Validação do PLS-DA.] Apresentar o PLS-DA acompanhado do Q$^{2}$ e do valor de $p$ obtido por permutação, evitando que a separação visual seja apresentada isoladamente como evidência suficiente de validade estatística do resultado.
@@ -514,7 +514,7 @@ Essa interação é representada por quatro situações:
     \item \textbf{Ausência de proposta:} a configuração é definida manualmente sem uma sugestão do sistema associada.
 \end{enumerate}
 
-A distinção entre ausência de sobrescrita e sobrescrita com concordância é necessária para interpretar a participação do usuário. Executar o processamento sem alterar os controles não demonstra, por si só, que a proposta foi avaliada e confirmada. Por outro lado, exercer o controle e manter a mesma configuração constitui uma manifestação explícita de concordância. Na janela, porém, essa distinção não é registrada: como os campos já vêm preenchidos com a proposta, manter a proposta grava a ausência de sobrescrita, e mudar algum campo grava a sobrescrita com discordância. As outras duas situações existem no modelo de dados e na interface de programação.
+A distinção entre ausência de sobrescrita e sobrescrita com concordância é necessária para interpretar a participação do usuário. Executar o processamento sem alterar os controles não demonstra, por si só, que a proposta foi avaliada e confirmada. Por outro lado, exercer o controle e manter a mesma configuração constitui uma manifestação explícita de concordância. Na janela, as sugestões só entram nos campos quando o pesquisador clica no botão para segui-las. Executar sem segui-las grava a ausência de proposta; seguir e manter grava a concordância com a mesma; mudar algum campo depois de seguir grava a sobrescrita com discordância. A sobrescrita com concordância existe no modelo de dados e na interface de programação, mas não é registrada pela janela.
 
 Quando há proposta e manifestação manual, as duas decisões são gravadas na mesma transação. Esse procedimento evita a persistência parcial do par em caso de falha na operação. A transação preserva a unidade lógica necessária para interpretar a interação entre o sistema e o profissional.
 
@@ -781,7 +781,9 @@ Após a seleção, o usuário pode solicitar a validação dos arquivos. Os prob
 
 O diagnóstico acrescenta informações sobre o comportamento da matriz e dos controles de qualidade. Seus resultados auxiliam a escolha do método de correção e a avaliação de possíveis fronteiras de lote. As sugestões produzidas pelo sistema permanecem sujeitas à revisão do profissional.
 
-A aba \textit{Corrigir e levar o resultado} reúne os controles de configuração e execução do processamento. O usuário pode selecionar o corretor e definir as operações posteriores, como filtragem, tratamento de valores ausentes, normalização, transformação e escalonamento. Por padrão, a caixa ``Automático'' vem marcada e aplica o corretor do palpite, medido em 200 \textit{features}; o usuário pode desmarcá-la, comparar os métodos pela medição completa e escolher o corretor.
+A aba \textit{Correção} reúne a escolha do corretor, o número de lotes e a variante do RSD dos QCs. Ela abre com os valores padrão: sem correção, com um lote e com o RSD calculado com todos os QCs. O botão \textit{Seguir sugestões do app} preenche o corretor indicado pelo palpite, medido em 200 \textit{features}, e o número de lotes proposto pelo diagnóstico; a sugestão aparece ao lado do botão, e a justificativa é aberta pelo botão ``?'' ao lado dela. O usuário pode também escolher o corretor e os lotes manualmente e comparar os métodos pela medição completa.
+
+A aba \textit{Normalização} reúne as operações posteriores à correção: filtragem por RSD e por valores ausentes, imputação, normalização por amostra, transformação e escalonamento. Nela, o mesmo botão apenas devolve os campos aos valores iniciais, que são pontos de partida e não uma escolha medida para a matriz. A aba \textit{Análise estatística} executa as análises sobre a matriz escolhida como entrada. O resultado da correção e o da normalização podem ser salvos na própria aba, no formato do laboratório, com as \textit{features} nas linhas, ou no do MetaboAnalyst.
 
 A configuração aplicada integra o registro da execução. A organização dos controles permite relacionar o resultado aos parâmetros escolhidos, evitando que o processamento seja apresentado como uma operação única cujas decisões internas não possam ser identificadas.
 
@@ -789,7 +791,7 @@ A aba \textit{Qualidade do resultado} apresenta os indicadores utilizados na ava
 
 A aba \textit{Gráficos} disponibiliza as representações visuais dos dados e das análises. O usuário seleciona a figura de interesse e examina aspectos como distribuição dos valores, dispersão dos controles de qualidade, estrutura multivariada e diferenças entre grupos. As figuras também podem ser exportadas para utilização em relatórios e apresentações.
 
-A aba \textit{O que este aplicativo NÃO faz} explicita os limites das funcionalidades. Essa informação integra o fluxo de utilização porque o tratamento computacional de uma matriz não equivale à identificação de compostos, à confirmação de significado biológico ou à validação clínica dos resultados.
+A aba \textit{Métodos e limites} explicita os limites das funcionalidades e reúne as referências dos métodos usados no processamento. Essa informação integra o fluxo de utilização porque o tratamento computacional de uma matriz não equivale à identificação de compostos, à confirmação de significado biológico ou à validação clínica dos resultados.
 
 A área \textit{Trabalhos em curso} permanece disponível durante a navegação. Ela permite consultar o estado das operações e solicitar o cancelamento dos trabalhos que não precisam continuar. Dessa forma, o acompanhamento não fica restrito à aba em que a execução foi iniciada.
 
@@ -798,9 +800,9 @@ O fluxo principal de utilização pode ser organizado nas seguintes etapas:
 \begin{enumerate}
     \item selecionar a matriz de medições e a lista de amostras;
     \item validar os arquivos e revisar os problemas identificados;
-    \item examinar o diagnóstico e as sugestões de processamento;
-    \item definir o corretor e os parâmetros de pré-processamento;
-    \item iniciar a execução e acompanhar seu andamento;
+    \item examinar o diagnóstico e as sugestões de processamento (palpite);
+    \item seguir as sugestões do aplicativo ou escolher o corretor e os lotes, e executar a correção;
+    \item definir os parâmetros de pré-processamento, executar a normalização e a análise estatística e acompanhar seu andamento;
     \item avaliar as métricas e os gráficos disponíveis;
     \item exportar o resultado correspondente ao ponto de processamento desejado.
 \end{enumerate}
